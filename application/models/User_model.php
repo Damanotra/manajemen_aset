@@ -41,21 +41,52 @@ class User_model extends CI_Model {
     	return $result;
 		# code...
 	}
+
+
+	//insert new row to user table, all parameter are required, make sure to implement validation form
+	//return true if success, but doesnt return false on failure
 	public function add($username, $nama, $email, $password)
 	{
 		$this->username = $username;
 		$this->nama = $nama;
 		$this->email = $email;
 		$this->password = $password;
-		$this->db->insert($this->_table,$this);
+		return $this->db->insert($this->_table,$this);
 		# code...
 	}
 
+
+	//get user by username
+	//return all atribute of usertable where username = parameter
+	//returned as array
 	public function getById($username)
 	{
-		$this->db->get_where($this->_table,array('username' => $username))
+		return $this->db->get_where($this->_table,array('username' => $username))->row_array();
 		# code...
 	}
+
+	public function delete($username)
+	{
+		return $this->db->delete($this->_table,array('username'=>$username));
+		# code...
+	}
+
+
+	//edit the atributes row of user table, username cant be changed only for specifying which row want to be changed
+	//return true when success, not returning false when failure
+	public function edit($username, $nama, $email, $password)
+	{
+		$data = array(
+       	'nama' => $post['nama'],
+        'email' => $post['email'],
+    	'password' => $post['password']
+		);
+		
+		return $this->db->update($this->_table,$data,array('username'=>$username));
+		# code...
+	}
+
+
 
 }
 
