@@ -41,6 +41,11 @@ class Atribut_model extends CI_Model {
 		return $this->db->update($this->_table,$data,array('id'=>$id));
 	}
 
+	public function delete($id)
+	{
+		# code...
+		return $this->db->delete($this->_table,array('id'=>$id));
+	}
 }
 
 /* End of file Atribut_model.php */
