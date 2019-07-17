@@ -10,6 +10,7 @@ class Aset_model extends CI_Model {
 	public $lokasi;
 	public $jenis_id;
 
+	#tested
  	public function getById($id)
 	{
 		# code...
@@ -17,24 +18,28 @@ class Aset_model extends CI_Model {
 		return $query->row_array();
 	}
 
+	#tested
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->get($this->_table)
+		$query = $this->db->get($this->_table);
 		return $query->result_array();
 	}
 
+	#tested
 	public function getJumlahByJenis($jenis_id)
 	{
 		# code...
 		$query = $this->db->get_where($this->_table,array('jenis_id' => $jenis_id));
 		return $query->num_rows();
 	}
-	public function getAllByJenis($jenis_id)
+
+	#
+	public function getByJenis($jenis_id)
 	{
 		# code...
 		$query = $this->db->get_where($this->_table,array('jenis_id' => $jenis_id));
-		return $query->result();
+		return $query->result_array();
 	}
 
 	public function add($merk,$kapasitas,$lokasi,$jenis_id)

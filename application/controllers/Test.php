@@ -7,10 +7,10 @@ class Test extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->model('user_model');
-		$user = $this->user_model;
-		$result = $user->add("ra","ra","ra","ra");
-		echo $result;
+		$this->load->model('aset_model');
+		$test_unit = $this->aset_model;
+		$result = $test_unit->getByJenis(1);
+		print_r($result);
 	}
 
 }
