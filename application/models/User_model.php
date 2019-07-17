@@ -77,9 +77,9 @@ class User_model extends CI_Model {
 	public function edit($username, $nama, $email, $password)
 	{
 		$data = array(
-       	'nama' => $post['nama'],
-        'email' => $post['email'],
-    	'password' => $post['password']
+       	'nama' => $nama,
+        'email' => $email,
+    	'password' => $password
 		);
 		
 		return $this->db->update($this->_table,$data,array('username'=>$username));
