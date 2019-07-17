@@ -7,9 +7,9 @@ class Test extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->model('aset_model');
-		$test_unit = $this->aset_model;
-		$result = $test_unit->getByJenis(1);
+		$this->load->model('user_model');
+		$test_unit = $this->user_model;
+		$result = $test_unit->getAll();
 		print_r($result);
 	}
 

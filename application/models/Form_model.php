@@ -4,13 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Form_model extends CI_Model {
 	private $_table = "form";
 	public $id;
-	public $jenis_id;
+	//public $jenis_id;
 	public $jadwal_id;
 	public $pembuat;
 	public $penyetuju;
 
-
-	$this->load->model('jadwal_model');
+	#tested
 	public function getById($id)
 	{
 		# code...
@@ -18,6 +17,7 @@ class Form_model extends CI_Model {
 		return $query->row_array();
 	}
 
+	#tested
 	public function getByJadwal($jadwal_id)
 	{
 		# code...
@@ -25,6 +25,7 @@ class Form_model extends CI_Model {
 		return $query->row_array();
 	}
 
+	
 	public function getByJenisTahun($jenis_id,$tahun)
 	{
 		# code...

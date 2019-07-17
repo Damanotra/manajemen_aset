@@ -9,6 +9,7 @@ class Atribut_model extends CI_Model {
 	public $jenis_id;
 	public $deskripsi;
 
+	#tested
 	public function getByJenis($jenis_id)
 	{
 		# code...
@@ -16,7 +17,8 @@ class Atribut_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function add($atribut,$jenis_id,$deskripsi)
+
+	public function add($atribut,$jenis_id,$deskripsi=null)
 	{
 		# code...
 		$this->atribut = $atribut;
@@ -24,13 +26,17 @@ class Atribut_model extends CI_Model {
 		$this->deskripsi = $deskripsi;
 		return $this->db->insert($this->_table,$this);
 	}
+
+	#tested
 	public function getById($id)
 	{
 		# code...
 		$query =  $this->db->get_where($this->_table,array('id' => $id));
 		return $query->row_array();
 	}
-	public function edit($id,$atribut,$jenis_id,$deskripsi)
+
+	#tested
+	public function edit($id,$atribut,$jenis_id,$deskripsi=null)
 	{
 		# code...
 		$data = array(
@@ -41,6 +47,7 @@ class Atribut_model extends CI_Model {
 		return $this->db->update($this->_table,$data,array('id'=>$id));
 	}
 
+	#tested
 	public function delete($id)
 	{
 		# code...

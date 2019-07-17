@@ -34,7 +34,7 @@ class Aset_model extends CI_Model {
 		return $query->num_rows();
 	}
 
-	#
+	#tested
 	public function getByJenis($jenis_id)
 	{
 		# code...
@@ -42,6 +42,7 @@ class Aset_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	#tested
 	public function add($merk,$kapasitas,$lokasi,$jenis_id)
 	{
 		# code...
@@ -52,6 +53,7 @@ class Aset_model extends CI_Model {
 		return $this->db->insert($this->_table,$this);
 	}
 
+	#tested
 	public function edit($id,$merk,$kapasitas,$lokasi,$jenis_id)
 	{
 		# code...
@@ -63,7 +65,8 @@ class Aset_model extends CI_Model {
 		);
 		return $this->db->update($this->_table,$data,array('id'=>$id));
 	}
-
+	
+	#tested
 	public function delete($id)
 	{
 		# code...

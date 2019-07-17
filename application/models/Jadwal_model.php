@@ -9,6 +9,7 @@ class Jadwal_model extends CI_Model {
 	public $jenis_id;
 	public $jenis_perawatan;
 
+	#tested
 	public function getByJenis($jenis_id)
 	{
 		# code...
@@ -16,12 +17,15 @@ class Jadwal_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	#tested
 	public function getById($id)
 	{
 		# code...
 		$query =  $this->db->get_where($this->_table,array('id' => $id));
 		return $query->row_array();
 	}
+
+	#tested
 	public function getByBulanTahun($bulan,$tahun)
 	{
 		# code...
@@ -31,6 +35,7 @@ class Jadwal_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	#tested
 	public function getByTahun($tahun)
 	{
 		# code...
@@ -40,6 +45,7 @@ class Jadwal_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	#tested
 	public function getByJenisTahun($jenis_id,$tahun)
 	{
 		# code...
@@ -48,13 +54,14 @@ class Jadwal_model extends CI_Model {
 		$query = $this->db->get_where($this->_table,array('jenis_id' => $jenis_id));
 		return $query->result_array();
 	}
-
+	
+	
 	public function delete($id)
 	{
 		# code...
 		return $this->db->delete($this->_table,array('id'=>$id));
 	}
-
+	
 	public function add($waktu, $jenis_id,$jenis_perawatan)
 	{
 		# code...

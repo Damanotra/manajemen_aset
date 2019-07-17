@@ -30,6 +30,12 @@ class User_model extends CI_Model {
 		# code...
 	}
 
+	public function getAll()
+	{
+		return $this->db->get($this->_table)->result();
+		# code...
+	}
+
 	public function cekUser($username, $password)
 	{
 		//var_dump($username);
