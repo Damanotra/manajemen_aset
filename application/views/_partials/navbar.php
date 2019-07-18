@@ -43,9 +43,10 @@
 
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <i class="fas fa-user-circle fa-fw"></i> Admin
-            </a>
+                aria-expanded="false">                  <?php foreach ($user as $u):
+            ?>
+                <i class="fas fa-user-circle fa-fw"></i> <?php echo $u->nama ?>
+            </a><?php endforeach; ?>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">Settings</a>
                 <a class="dropdown-item" href="#">Activity Log</a>

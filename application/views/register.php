@@ -33,7 +33,7 @@
             
                         <?php echo form_open('login/daftar') ?>
                         	<label> Nama </label><br>
-                        	<input type="text" name="name" class="text-center" placeholder="Masukkan Nama" required style="width: 200px; border-radius: 25px;">
+                        	<input type="text" name="nama" class="text-center" placeholder="Masukkan Nama" required style="width: 200px; border-radius: 25px;">
                             <br><br>
 
                             <label> Email</label><br>

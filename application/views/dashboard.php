@@ -20,10 +20,17 @@
 
 		<div class="container-fluid text-center">
 		<h1>Dashboard</h1>
+		
+		<?php var_dump($user["nama"]);
+		exit(); ?>
+			<p><?php echo  $user["nama"] ?></p>
+
+		
+
 	<h2>Assalamualaikum</h2>
 		<?php echo anchor('login/logout','Logout') ?>
 	</div>
-</div>
+	</div>
 </div>
 <?php $this->load->view("_partials/js.php")?>
 <?php $this->load->view("_partials/footer.php")?>

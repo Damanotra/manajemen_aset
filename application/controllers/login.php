@@ -40,7 +40,11 @@ class login extends CI_Controller
 					'email' =>$user->email
 				);
 				$this->session->set_userdata($session);
-				redirect('page/sudah_login');
+				/*echo ($session["username"]);
+				exit();*/
+				var_dump($session);
+			exit();
+				redirect('page/sudah_login/');
 			}else {
 				$this->session->set('message', 'Password salah');
 				redirect('login');
@@ -62,7 +66,7 @@ class login extends CI_Controller
 			$email = $post["email"];
 			$password = md5($post["password"]);
 
-			$user->add($username,$nama,$email);
+			$user->add($username,$nama,$email,$password);
 			$this->session->set_flashdata('success','Berhasil daftar');
 			redirect('login');
 		}else{
