@@ -38,8 +38,8 @@ class JenisAset_model extends CI_Model {
 	{
 		# code...
 		$this->load->model('aset_model');
-		$result = $this->db->get_where($this->_table,array('id' => $id))->row_array();
-		$result['jumlah'] = $this->aset_model->getJumlahByJenis($result['id']);
+		$result = $this->db->get_where($this->_table,array('id' => $id))->result_array();
+		$result[0]['jumlah'] = $this->aset_model->getJumlahByJenis($result[0]['id']);
 		return $result;
 	}
 

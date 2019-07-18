@@ -17,6 +17,13 @@ class Atribut_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function getAll()
+	{
+		# code...
+		$query = $this->db->get($this->_table);
+		return $query->result_array();
+	}
+
 
 	public function add($atribut,$jenis_id,$deskripsi=null)
 	{
