@@ -16,8 +16,8 @@ class Page extends MY_Controller
 	public function sudah_login($username)
 	{
 
-		$data["user"] = $this->User_model->getById($username);
-
+		$data["pengguna"] = $this->User_model->getById($username);
+		$data["user"] = $_SESSION["username"];
 		$records = $this->aset_model->getall();
 		$columns = array_keys($records[0]);
 		$data['records'] = $records;
@@ -37,4 +37,8 @@ class Page extends MY_Controller
 		$this->load->view('dashboard.php',$data);
 	}
 
-}
+	
+
+
+
+}	

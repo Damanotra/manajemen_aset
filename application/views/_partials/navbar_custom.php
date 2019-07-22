@@ -65,8 +65,8 @@
                 <i class="fas fa-user-circle fa-fw"></i>Account
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#"><?php echo $user["nama"] ?></a>
-                <a class="dropdown-item" href="<?php echo site_url('')   ?>">Setting</a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalUser"><?php echo $_SESSION["nama"] ?></a>
+                <a class="dropdown-item" href="<?php echo site_url('login/edit')   ?>">Setting</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
             </div>
@@ -74,3 +74,26 @@
     </ul>
 
 </nav>
+
+<div class="modal fade" id="modalUser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h3> Akun anda</h3>
+             </div>
+
+            <div class="modal-body">
+                 
+                <p>Nama : <?php echo $pengguna["nama"]?></p>
+                <p>Username : <?php echo $pengguna["username"]?></p>
+                <p>Email : <?php echo $pengguna["email"]?></p>
+            </div>
+
+            <div class="modal-footer">
+                <form action="<?php echo 'login/edit'   ?>">
+              <a class="btn btn-primary" href="<?php echo site_url('login/edit')?>"> Edit Akun</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

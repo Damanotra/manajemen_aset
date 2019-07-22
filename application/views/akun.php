@@ -19,29 +19,32 @@
 
 </head>
 <body>
-	<?php $this->load->view("_partials/navbar_custom.php")?>
+	<?php $this->load->view("_partials/navbar.php")?>
 	<?php $this->load->view("_partials/modal.php")?>
-	
+	<?php $this->load->view("_partials/sidebar")?>
 	<div id="wrapper">
-<?php $this->load->view("_partials/sidebar_custom")?>
 
 <style>
+	{
+		
+	}
+
 	th{
 
 		font-size: 100%;
 	}
 </style>
 	 <div id="content-wrapper">
-<?php $this->load->view("_partials/breadcrumb")?>
 
-			<div class="container-fluid text-center">
-					<h1>Dashboard</h1>
-					
-			<?php $this->load->view("_partials/datatable1.php")?>
-		</div></div>	
+<div class="container-fluid text-center">
+		<h1>Akun</h1>
 
+</div>		
+	</div>
+
+		
 </div>
-
+</div>
 <?php $this->load->view("_partials/js.php")?>
 <?php $this->load->view("_partials/footer.php")?>
 

@@ -34,10 +34,11 @@
 	 <div id="content-wrapper">
 <?php $this->load->view("_partials/breadcrumb")?>
 
+
 			<div class="container-fluid text-center">
 					<h1>Dashboard</h1>
-					
-			<?php $this->load->view("_partials/datatable1.php")?>
+
+			<?php $this->load->view("_partials/edit_akun1.php")?>
 		</div></div>	
 
 </div>

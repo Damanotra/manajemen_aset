@@ -24,6 +24,7 @@ class login extends CI_Controller
 		$this->load->view("login_page");
 
 	}	
+	
 
 	public function login_proccess()
 	{
@@ -49,7 +50,7 @@ class login extends CI_Controller
 				redirect('login');
 
 			}else {
-				$this->session->set('message', 'Password salah');
+				$this->session->set_flashdata('message', 'Password salah');
 				redirect('login');
 			}
 		}
@@ -69,7 +70,7 @@ class login extends CI_Controller
 			$nama = $post["nama"];
 			$email = $post["email"];
 			$password = md5($post["password"]);
-			$user->add($username,$nama,$email);
+			$user->add($username,$nama,$email,$password);
 			$this->session->set_flashdata('success','Berhasil daftar');
 			redirect('login');
 		}		
@@ -85,14 +86,29 @@ class login extends CI_Controller
 		redirect('login');
 	}
 
-	public function edit_akun($username, $nama, $email, $password){
-		$username = $post["username"];
+
+	public function edit(){
+		$data["user"] = $_SESSION["username"];
+
+		 $this->load->view('edit_akun',$data);
+		}
+
+	public function proses_edit()
+	{
+		$username = $_SESSION["username"];
+		$post = $this->input->post();
 		$nama = $post["nama"];
 		$email = $post["email"];
-		$password = $post["password"];
+		$password = md5($post["password"]);
+       if( $this->User_model->edit($username,$nama,$email,$password)){
+       	$_SESSION["nama"] = $nama;
+       	$_SESSION["email"] = $email;
+       	$_SESSION["password"] = $password;
 
-		$this->User_model->edit($username, $nama, $email, $password);
-		$this->load->view('edit_akun');
+       }
+
+        redirect('login');
 	}
+	
 
 }
