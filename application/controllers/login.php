@@ -14,8 +14,12 @@ class login extends CI_Controller
 	public function index()
 	{
 		
-		if($this->session->userdata('authenticated'))
-			redirect('page/sudah_login');
+		if($this->session->userdata('authenticated')){
+			/*var_dump('nama');
+			exit();*/
+			
+			redirect('page/sudah_login/'.$_SESSION['username']);
+		}
 
 		$this->load->view("login_page");
 
@@ -25,8 +29,9 @@ class login extends CI_Controller
 	{
 		$username = $this->input->post('username');
 		$password = md5($this->input->post('password'));
-
+		
 		$user = $this->User_model->getById($username);
+
 
 		if(empty($user)){
 			$this->session->set_flashdata('message','Username tidak ditemukan');
@@ -35,16 +40,14 @@ class login extends CI_Controller
 			if($password == $user['password']){
 				$session = array(
 					'authenticated'=>true,
-					'username' => $user->username,
-					'nama' => $user->nama,
-					'email' =>$user->email
+					'username' => $user["username"],
+					'nama' => $user["nama"],
+					'email' =>$user["email"]
 				);
+				
 				$this->session->set_userdata($session);
-				/*echo ($session["username"]);
-				exit();*/
-				var_dump($session);
-			exit();
-				redirect('page/sudah_login/');
+				redirect('login');
+
 			}else {
 				$this->session->set('message', 'Password salah');
 				redirect('login');
@@ -59,25 +62,37 @@ class login extends CI_Controller
 		$validation->set_rules($user->signup_rules());
 
 		if($validation->run())
+					
 		{
 			$post = $this->input->post();
 			$username = $post["username"];
 			$nama = $post["nama"];
 			$email = $post["email"];
 			$password = md5($post["password"]);
-
-			$user->add($username,$nama,$email,$password);
+			$user->add($username,$nama,$email);
 			$this->session->set_flashdata('success','Berhasil daftar');
 			redirect('login');
-		}else{
-			$this->load->view('register');
-		}
+		}		
+		else
+			{
+				$this->load->view('register');
+			}
 	}
 	
 
 	public function logout(){
 		$this->session->sess_destroy();
 		redirect('login');
+	}
+
+	public function edit_akun($username, $nama, $email, $password){
+		$username = $post["username"];
+		$nama = $post["nama"];
+		$email = $post["email"];
+		$password = $post["password"];
+
+		$this->User_model->edit($username, $nama, $email, $password);
+		$this->load->view('edit_akun');
 	}
 
 }

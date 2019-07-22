@@ -5,7 +5,7 @@ class Aset_model extends CI_Model {
 
 	private $_table = "asets";
 	public $id;
-	public $merk;
+	public $Merk;
 	public $kapasitas;
 	public $lokasi;
 	public $jenis_id;

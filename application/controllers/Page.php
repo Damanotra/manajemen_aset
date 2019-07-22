@@ -7,16 +7,34 @@ class Page extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->model("User_model");
+			$this->load->model('aset_model');
 	}
-	public function sudah_login()
-	{	
-		var_dump($_SESSION);
-		exit();
-		$this->load->library('session');
+	public function index(){
+		redirect('login');
+	}
+
+	public function sudah_login($username)
+	{
+
 		$data["user"] = $this->User_model->getById($username);
-		var_dump($username);
-		exit();
+
+		$records = $this->aset_model->getall();
+		$columns = array_keys($records[0]);
+		$data['records'] = $records;
+		$data['columns'] = $columns;
 		$this->load->view('dashboard', $data);
 	}
-	
+
+	public function showJenisAsetById($id)
+	{
+		# code...
+		$this->load->model('jenisaset_model');
+		$records = $this->jenisaset_model->getById($id);
+		$columns = array_keys($records[0]);
+		//var_dump($records);
+		$data['records'] = $records;
+		$data['columns'] = $columns;
+		$this->load->view('dashboard.php',$data);
+	}
+
 }

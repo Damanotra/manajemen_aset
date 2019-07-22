@@ -29,7 +29,7 @@
                      foreach ($columns as $col): 
                         if($col=="jenis_id"): ?>
                   <td width='150' >
-                     <a href="<?php echo site_url('test/showJenisAsetById/'.$row[$col])?>">
+                     <a href="<?php echo site_url('page/showJenisAsetById/'.$row[$col])?>">
                         <?php else: ?>
                   <td width="150">
                   <a>

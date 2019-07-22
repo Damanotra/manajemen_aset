@@ -5,6 +5,7 @@ class User_model extends CI_Model {
 
 	private $_table = "users";
 	public $username;
+	public $nama;
 	public $email;
 	public $password;
 
@@ -32,8 +33,10 @@ class User_model extends CI_Model {
 
 	public function getAll()
 	{
+		
 		return $this->db->get($this->_table)->result();
 		# code...
+		
 	}
 
 	public function cekUser($username, $password)
