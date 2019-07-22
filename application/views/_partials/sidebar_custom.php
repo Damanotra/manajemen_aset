@@ -15,7 +15,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <a class="dropdown-item" href="<?php echo site_url('admin/products/new') ?>">Jadwal Aset</a>
-            <a class="dropdown-item" href="<?php echo site_url('login') ?>">Pengisian Form Aset</a>
+            <a class="dropdown-item" href="<?php echo '' ?>">Pengisian Form Aset</a>
         </div>
     </li>
     <li class="nav-item">

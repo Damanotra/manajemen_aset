@@ -56,14 +56,8 @@ class JenisAset_model extends CI_Model {
 	public function getAll()
 	{
 		# code...
-		$result = array();
-		$query =$this->db->query("SELECT id FROM jenis_aset");
-		foreach ($query->result_array() as $row) {
-			# code...
-			$new_row = $this->getById($row['id']);
-			array_push($result, $new_row);
-		}
-		return $result;
+		$query = $this->db->get($this->_table);
+		return $query->result_array();
 	}
 
 	#tested

@@ -9,6 +9,19 @@ class Form_model extends CI_Model {
 	public $pembuat;
 	public $penyetuju;
 
+	public function show($id)
+	{
+		# code...
+		$result = $this->getById($id);
+	}
+	
+	public function getAll()
+	{
+		# code...
+		$query = $this->db->get($this->_table);
+		return $query->result_array();
+	}
+
 	#tested
 	public function getById($id)
 	{

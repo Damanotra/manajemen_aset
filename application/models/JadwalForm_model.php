@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Jadwal_model extends CI_Model {
+class Jadwalform_model extends CI_Model {
 
-	private $_table = "jadwal_perawatan";
+	private $_table = "form_per_jadwal";
 	public $id;
 	public $waktu;
 	public $jenis_id;

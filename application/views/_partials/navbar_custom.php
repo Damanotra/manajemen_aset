@@ -84,9 +84,9 @@
 
             <div class="modal-body">
                  
-                <p>Nama : <?php echo $pengguna["nama"]?></p>
-                <p>Username : <?php echo $pengguna["username"]?></p>
-                <p>Email : <?php echo $pengguna["email"]?></p>
+                <p>Nama : <?php echo $_SESSION["nama"]?></p>
+                <p>Username : <?php echo $_SESSION["username"]?></p>
+                <p>Email : <?php echo $_SESSION["email"]?></p>
             </div>
 
             <div class="modal-footer">

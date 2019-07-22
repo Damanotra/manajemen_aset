@@ -32,6 +32,12 @@ class Test extends CI_Controller {
 		# code...
 	}
 
+	public function edit($id)
+	{
+		# code...
+		$this->load->view('welcome_message.php');
+	}
+
 }
 
 /* End of file Test.php */
