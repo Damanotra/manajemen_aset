@@ -107,19 +107,19 @@ class Dashboard extends CI_Controller {
 	{
 		# code...
 		$aset = $this->aset_model;
-
 		$validation = $this->form_validation;
 		$validation->set_rules($aset->rules());
 		if($validation->run()){
-			$get = $this->input->get();
-			$merk = $get['merk'];
-			$kapasitas = $get['kapasitas'];
-			$lokasi = $get['lokasi'];
-			$jenis_id = $get['jenis_id'];
+			$post = $this->input->post();
+			$merk = $post['merk'];
+			$kapasitas = $post['kapasitas'];
+			$lokasi = $post['lokasi'];
+			$jenis_id = $post['jenis_id'];
  			$aset->add($merk,$kapasitas,$lokasi,$jenis_id);
 			$this->session->set_flashdata('success', 'Berhasil disimpan');
 		}
-		$this->load->view('add');
+		$data['jenis'] = $this->jenisaset_model->getall();
+		$this->load->view('add',$data);
 	}
 
 

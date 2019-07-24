@@ -33,9 +33,9 @@
                 <?php $this->load->view("_partials/sidebar_custom")?>
 
                     <div id="content-wrapper">
-                    	<?php $this->load->view("_partials/breadcrumb")?>
+                        <?php $this->load->view("_partials/breadcrumb")?>
 
-                        <div class="container-fluid">
+                            <div class="container-fluid">
                                 <?php if ($this->session->flashdata('success')): ?>
                                     <div class="alert alert-success" role="alert">
                                         <?php echo $this->session->flashdata('success'); ?>
@@ -48,7 +48,7 @@
                                             </div>
                                             <div class="card-body">
 
-                                                <form action="<?php site_url('addAset') ?>" method="get" enctype="multipart/form-data">
+                                                <form action="<?php site_url('addAset') ?>" method="post" enctype="multipart/form-data">
                                                     <div class="form-group">
                                                         <label for="merk">Merk*</label>
                                                         <input class="form-control <?php echo form_error('merk') ? 'is-invalid':'' ?>" type="text" name="merk" placeholder="Aset Merk" />
@@ -74,38 +74,40 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="jenis_id">Jenis*</label>
-                                                        <input class="form-control <?php echo form_error('jenis_id') ? 'is-invalid':'' ?>" type="text" name="jenis_id" placeholder="Aset jenis_id...">
-                                                        <div class="invalid-feedback">
-                                                            <?php echo form_error('jenis_id') ?>
-                                                        </div>                                                    </div>
+                                                        <label for="jenis_id">Jenis Aset:</label>
+                                                        <select class="form-control" id="sel1" name="jenis_id">
+                                                            <?php foreach ($jenis as $jen) {
+                                                                echo "<option>".$jen['id']."-".$jen['nama']."</option>";
+                                                            } ?>
+                                                        </select>
+                                                    </div>
 
-                                                    <input class="btn btn-success" type="submit" name="btn" value="Save" />
+                                                        <input class="btn btn-success" type="submit" name="btn" value="Save" />
                                                 </form>
 
-                                            </div>
+                                                </div>
 
-                                            <div class="card-footer small text-muted">
-                                                * required fields
+                                                <div class="card-footer small text-muted">
+                                                    * required fields
+                                                </div>
+
                                             </div>
+                                            <!-- /.container-fluid -->
+
+                                            <!-- Sticky Footer -->
 
                                         </div>
-                                        <!-- /.container-fluid -->
+                                        <!-- /.content-wrapper -->
 
-                                        <!-- Sticky Footer -->
-                                       
-                        </div>
-                        <!-- /.content-wrapper -->
+                            </div>
+                            <!-- /#wrapper -->
+                            <?php $this->load->view("_partials/js.php")?>
+                                <?php $this->load->view("_partials/footer.php")?>
 
-                    </div>
-                    <!-- /#wrapper -->
-					<?php $this->load->view("_partials/js.php")?>
-                	<?php $this->load->view("_partials/footer.php")?>
-
-                    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
-                    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-                    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+                                    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+                                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+                                    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+                                    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
 </body>
 

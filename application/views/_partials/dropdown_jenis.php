@@ -4,7 +4,7 @@
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="<?php echo site_url('dashboard/showAsetAll') ?>">Semua Aset</a>
-    <a class="dropdown-item" href="<?php echo site_url('dashboard/showJenisAll') ?>">Semua Jenis Aset</a>
+    <a class="dropdown-item" href="<?php echo site_url('dashboard/showAsetByJenis/1') ?>">Jenis Aset</a>
     <a class="dropdown-item" href="<?php echo site_url('dashboard/showJadwalByJenis/1') ?>">Jadwal Perawatan</a>
   </div>
 </div>
