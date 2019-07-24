@@ -5,10 +5,32 @@ class Aset_model extends CI_Model {
 
 	private $_table = "asets";
 	public $id;
-	public $Merk;
+	public $merk;
 	public $kapasitas;
 	public $lokasi;
 	public $jenis_id;
+
+	public function rules()
+	{
+		# code...
+		return [
+			['field'=>'merk',
+			'label'=>'merk',
+			'rules'=>'required'],
+
+			['field'=>'kapasitas',
+			'label'=>'kapasitas',
+			'rules'=>'required'],
+
+			['field'=>'lokasi',
+			'label'=>'lokasi',
+			'rules'=>'required'],
+
+			['field'=>'jenis_id',
+			'label'=>'jenis_id',
+			'rules'=>'required']
+		];
+	}
 
 	#tested
  	public function getById($id)

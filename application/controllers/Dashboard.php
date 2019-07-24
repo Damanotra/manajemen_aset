@@ -103,6 +103,25 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard.php',$data);
 	}
 
+	public function addAset()
+	{
+		# code...
+		$aset = $this->aset_model;
+
+		$validation = $this->form_validation;
+		$validation->set_rules($aset->rules());
+		if($validation->run()){
+			$get = $this->input->get();
+			$merk = $get['merk'];
+			$kapasitas = $get['kapasitas'];
+			$lokasi = $get['lokasi'];
+			$jenis_id = $get['jenis_id'];
+ 			$aset->add($merk,$kapasitas,$lokasi,$jenis_id);
+			$this->session->set_flashdata('success', 'Berhasil disimpan');
+		}
+		$this->load->view('add');
+	}
+
 
 
 }
