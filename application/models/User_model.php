@@ -43,7 +43,6 @@ class User_model extends CI_Model {
 	{
 		//var_dump($username);
 		$query = "email = '".$username."' OR username = '".$username."'";
-		var_dump($query);
    		$this->db->where($query);
     	$this->db->where('password', $password);
     	$result = $this->db->get($this->_table)->row_array();

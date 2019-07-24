@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Dashboard</title>
-<div class="open-head">
+			<div class="open-head">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 		<!-- jQuery library -->
@@ -17,6 +17,26 @@
 	<?php $this->load->view("_partials/head.php")?>
 </div>
 
+<div class="style">
+<style>
+@font-face{
+	font-family: test;
+	src:url(font/GothamBold.ttf);
+}
+h1 {
+	font-family: 'test';
+	
+}
+p
+	{
+		font-family: 'test';
+		font-size: 20px;
+	}
+
+
+ </style>
+</div>
+
 </head>
 <body>
 	<?php $this->load->view("_partials/navbar_custom.php")?>
@@ -25,23 +45,20 @@
 	<div id="wrapper">
 <?php $this->load->view("_partials/sidebar_custom")?>
 
-<style>
-	th{
-
-		font-size: 100%;
-	}
-</style>
-	 <div id="content-wrapper">
+	 	<div id="content-wrapper">
 <?php $this->load->view("_partials/breadcrumb")?>
-
-
+<div class="container">
 			<div class="container-fluid text-center">
-					<h1>Dashboard</h1>
+					<h1>About Us</h1>
+				</div>
+		<div class="container">
+			<p>Website ini adalah hasil Project PKL untuk me</p>
+		</div>
 
-			<?php $this->load->view("_partials/edit_akun1.php")?>
-		</div></div>	
 
-</div>
+</div>	
+		</div>
+	</div>
 
 <?php $this->load->view("_partials/js.php")?>
 <?php $this->load->view("_partials/footer.php")?>

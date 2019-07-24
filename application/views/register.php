@@ -33,19 +33,19 @@
             
                         <?php echo form_open('login/daftar') ?>
                         	<label> Nama </label><br>
-                        	<input type="text" name="nama" class="text-center" placeholder="Masukkan Nama" required style="width: 200px; border-radius: 25px;">
+                        	<input type="text" name="nama" class="text-center" placeholder="Masukkan Nama" required  oninvalid="this.setCustomValidity('Masukkan Nama')" style="width: 200px; border-radius: 25px;">
                             <br><br>
 
                             <label> Email</label><br>
-                            <input type="text" name="email" class="text-center" placeholder="Masukkan Email" required style="width: 200px; border-radius: 25px;">
+                            <input type="text" name="email" class="text-center" placeholder="Masukkan Email" required oninvalid="this.setCustomValidity('Masukkan Email')" style="width: 200px; border-radius: 25px;">
                             <br><br>
 
                             <label> Username</label><br>
-                        	<input type="text" name="username" class="text-center" placeholder="Masukkan Username" required style="width: 200px; border-radius: 25px;">
+                        	<input type="text" name="username" class="text-center" placeholder="Masukkan Username" required  oninvalid="this.setCustomValidity('Masukkan Username')" style="width: 200px; border-radius: 25px;">
                             <br><br>
                         	
                         	<label>Password</label><br>
-                        	<input type="password" class="text-center" name="password" placeholder="Masukkan Password" required style="width: 200px; border-radius: 25px;">
+                        	<input type="password" class="text-center" name="password" placeholder="Masukkan Password" required  oninvalid="this.setCustomValidity('Masukkan Password')" style="width: 200px; border-radius: 25px;">
                         		<div style="color: red; margin-bottom:15px;">
                             			<?php if($this->session->flashdata('message')){
                             			echo $this->session->flashdata('message');

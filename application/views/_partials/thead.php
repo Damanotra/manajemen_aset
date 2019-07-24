@@ -1,4 +1,4 @@
-<table class="table-sm table-bordered">
+<table class="table-responsive-sm table-bordered">
     <thead class="thead-dark">
       <tr>
         <th >&nbsp;No &nbsp;</th>

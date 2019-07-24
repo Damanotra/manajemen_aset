@@ -13,15 +13,34 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<div class="style">
+<style>
+@font-face{
+    font-family: test;
+    src:url(font/Gotham-Bold.ttf);
+}
+.btn-success {
+    font-family: 'test';
+    
+}
+.btn-primary
+    {
+        font-family: 'test';
+        background-color: navy;
+        opacity: 0.7;
+    }
+label
+    {
+        font-family: 'test';
+    }
+#mid {
+    margin-top: 10%;
+}
+
+ </style>
+</div>
 </head>
 
-<style>
-    
-    #mid{
-        margin: 10%;
-    }
-
-</style>
 
 
 <body>
@@ -38,11 +57,11 @@
                         <?php echo form_open('login/login_proccess') ?>
                         	
                             <label> Username</label><br>
-                        	<input type="text" class="text-center" name="username" placeholder="Username" required style="border-radius: 25px;">
+                        	<input type="text" class="text-center" name="username" placeholder="Username" required oninvalid="this.setCustomValidity('Masukkan Username dengan benar')" style="border-radius: 25px;">
                             <br><br>
                         
                         	<label>Password</label><br>
-                        	<input type="password" class="text-center" name="password" placeholder="Password" required style="border-radius: 25px;">
+                        	<input type="password" class="text-center" name="password" placeholder="Password" required oninvalid="this.setCustomValidity('Masukkan Password dengan benar')" style="border-radius: 25px;">
                         		<div style="color: red; margin-bottom:15px;">
                             			<?php if($this->session->flashdata('message')){
                             			echo $this->session->flashdata('message');
