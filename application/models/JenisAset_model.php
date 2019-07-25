@@ -25,8 +25,7 @@ class JenisAset_model extends CI_Model {
 			'rules'=>'required'],
 
 			['field'=>'parent',
-			'label'=>'parent',
-			'rules'=>'required'],
+			'label'=>'parent'],
 		];
 	}
 

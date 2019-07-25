@@ -105,7 +105,6 @@ class Dashboard extends CI_Controller {
 
 	public function addAset()
 	{
-		# code...
 		$aset = $this->aset_model;
 		$validation = $this->form_validation;
 		$validation->set_rules($aset->rules());
@@ -119,11 +118,26 @@ class Dashboard extends CI_Controller {
 			$this->session->set_flashdata('success', 'Berhasil disimpan');
 		}
 		$data['jenis'] = $this->jenisaset_model->getall();
-		$this->load->view('add',$data);
+		$this->load->view('add_aset',$data);
 	}
 
-
-
+	public function addJenisAset()
+	{
+		# code...
+		$aset = $this->aset_model;
+		$validation = $this->form_validation;
+		$validation->set_rules($aset->rules());
+		if($validation->run()){
+			$post = $this->input->post();
+			$merk = $post['nama'];
+			$kapasitas = $post['satuan'];
+			$lokasi = $post['parent'];
+ 			$aset->add($nama,$satuan,$parent,$jenis_id);
+			$this->session->set_flashdata('success', 'Berhasil disimpan');
+		}
+		$data['jenis'] = $this->jenisaset_model->getall();
+		$this->load->view('add_aset',$data);
+	}
 }
 
 /* End of file Dashboard.php */
