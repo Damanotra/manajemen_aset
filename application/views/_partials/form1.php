@@ -6,7 +6,7 @@
 }
 .tg td
 {
-    font-size:14px;padding:10px 5px;
+   padding:10px 5px;
     border-style:solid;
     border-width:1px;
     overflow:hidden;
@@ -15,7 +15,7 @@
 }
 .tg th
 {
-    font-family:Arial, sans-serif;font-size:14px;font-weight:normal;
+   
     padding:10px 5px;
     border-style:solid;
     border-width:1px;
@@ -38,7 +38,8 @@
 }
 </style>
  <!--------------------<START THEAD>------------------------------------------------>
-<table class="tg">
+<table class="table tg">
+<thead>
   <tr>
     <th class="tg-1zis" rowspan="3"><br><br>No<br></th>
     <th class="tg-1zis" rowspan="3"><br><br>Merk AC<br></th>
@@ -47,8 +48,9 @@
     <th class="tg-1zis" colspan="11">Tindak Pemeriksaan</th>
     <th class="tg-1zis" rowspan="3"><br><br>Tanggal</th>
     <th class="tg-1zis" rowspan="3"><br><br>Petugas</th>
-    <th class="tg-1zis" rowspan="3"><br><br>Paraf</th>
+    <th class="tg-1zis" rowspan="3"><br><br>Action  </th>
   </tr>
+  
   <tr>
     <td class="tg-1zis" colspan="2">Filter Udara</td>
     <td class="tg-1zis" colspan="2">Evaporator</td>
@@ -69,13 +71,16 @@
     <td class="tg-1zis" class="responsive">  A  </td>
     <td class="tg-1zis" class="responsive">  P  </td>
   </tr>
+</thead>
  <!--------------------------</END THEAD>------------------------------------------>
  <!-------------------------------<START TBODY>------------------------------------>
+    <tbody>
   <tr>
     <td class="tg-1zis">1</td>
     <td class="tg-1zis">AC Procys C1</td>
     <td class="tg-1zis">20 PK (2<br>  Outdoor)</td>
     <td class="tg-1zis">Office<br>  Transkip, SKK, DRC</td>
+    <?php echo form_open('')  ?>
     <td><input type="checkbox" name=""></td>
     <td><input type="checkbox" name=""></td>
     <td><input type="checkbox" name=""></td>
@@ -89,13 +94,13 @@
     <td><input type="text" name="" style="width: 50px;"></td>
     <td>x</td>
     <td>x</td>
-    <td>x</td>
+    <td><button type="Submit">submit</button></td>
   </tr>
- 
+    <?php echo form_close();?>
   <tr>
     <td class="tg-73oq" colspan="18" rowspan="2"></td>
   </tr>
-  <tr>
-  </tr>
+ 
+  </tbody>
   <!--------------------------------</END TBODY>------------------------------------>
 </table>

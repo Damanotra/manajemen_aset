@@ -27,7 +27,7 @@
                            <th class="responsive">Penyetuju</th>
 
                         <?php elseif($col=="waktu") :?>
-                           <th class="responsive">Waktu (w|m|y)</th>
+                           <th class="responsive">Waktu (d-m-y)</th>
 
                         <?php elseif($col=="jenis_perawatan") :?>
                            <th class="responsive">Perawatan</th>
@@ -73,10 +73,10 @@
                   </td>
                   <?php endforeach;?>
                   <td class="responsive">
-                     <a href="<?php echo '' ?>"
+                     <a href="<?php echo 'editAset' ?>"
                         class="btn btn-small"><i class="fas fa-edit"></i> Edit</a>|
                      <a onclick=""
-                        href="#!" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
+                        href="<?php echo '' ?>" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
                   </td>
                   </tr>
                   <?php endforeach; ?>

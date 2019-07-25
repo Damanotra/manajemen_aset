@@ -35,14 +35,12 @@
 <?php $this->load->view("_partials/breadcrumb")?>
 
 
-			<div class="container-fluid text-center">
+			<div class="container-fluid text-center ">
 					<h3>Edit Akun</h3> 
-
+			</div>
+			<div class="container">
 					<?php echo form_open('login/proses_edit') ?>
-						  	<label> Username</label><br>
-	                        	<input type="text" name="username" class="text-center" placeholder="Masukkan Username" required style="width: 200px; border-radius: 25px;">
-	                            <br><br>
-
+						  	
                         	<label> Nama </label><br>
                         	<input type="text" name="nama" class="text-center" placeholder="Masukkan Nama" required style="width: 200px; border-radius: 25px;">
                             <br><br>
@@ -69,9 +67,9 @@
                                     
                                         <button type="submit" class="btn btn-primary" style="opacity: 0.7; border-radius: 25px; width: 100px;">Edit</button>
                                     <?php echo form_close() ?>
-				</div>
+								</div>
 		</div>	
-
+</div>	
 </div>
 
 <?php $this->load->view("_partials/js.php")?>

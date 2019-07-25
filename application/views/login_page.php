@@ -61,8 +61,10 @@ label
                             <br><br>
                         
                         	<label>Password</label><br>
-                        	<input type="password" class="text-center" name="password" placeholder="Password" required oninvalid="this.setCustomValidity('Masukkan Password dengan benar')" style="border-radius: 25px;">
-                        		<div style="color: red; margin-bottom:15px;">
+                            
+                        	       <input type="password" class="form-password text-center" name="password" placeholder="Password" required oninvalid="this.setCustomValidity('Masukkan Password dengan benar')" style="border-radius: 25px;"><br><input type="checkbox" class="form-checkbox" value="Show password"> 
+                        	
+                                <div style="color: red; margin-bottom:15px;">
                             			<?php if($this->session->flashdata('message')){
                             			echo $this->session->flashdata('message');
                             		}
@@ -84,4 +86,18 @@ label
             </div>
 </div>
 </body>
+
+<script type="text/javascript">
+    
+$(document).ready(function(){       
+        $('.form-checkbox').click(function(){
+            if($(this).is(':checked')){
+                $('.form-password').attr('type','text');
+            }else{
+                $('.form-password').attr('type','password');
+            }
+        });
+    });
+
+</script>
 </html>
