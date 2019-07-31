@@ -17,7 +17,7 @@ class login extends CI_Controller
 			/*var_dump('nama');
 			exit();*/
 			
-			redirect('page/sudah_login/'.$_SESSION['username']);
+			redirect('page/home/'.$_SESSION['username']);
 		}
 
 		$this->load->view("login_page");
@@ -99,14 +99,15 @@ class login extends CI_Controller
 		$nama = $post["nama"];
 		$email = $post["email"];
 		$password = md5($post["password"]);
-       if( $this->User_model->edit($username,$nama,$email,$password)){
+       if( $this->User_model->edit($username,$nama,$email,$password))
+       {
        	$_SESSION["nama"] = $nama;
        	$_SESSION["email"] = $email;
        	$_SESSION["password"] = $password;
-
+       	$this->session->set_flashdata('pesan','Berhasil mengganti');
        }
 
-        redirect('login');
+        redirect('dashboard');
 	}
 	
 

@@ -121,22 +121,61 @@ class Dashboard extends CI_Controller {
 		$this->load->view('add_aset',$data);
 	}
 
-	public function addJenisAset()
+	public function addJadwalAset()
 	{
-		# code...
-		$aset = $this->aset_model;
+			
+		$asetJadwal = $this->jadwalform_model;
 		$validation = $this->form_validation;
-		$validation->set_rules($aset->rules());
+		$validation->set_rules($asetJadwal->JadwalRules());
 		if($validation->run()){
 			$post = $this->input->post();
-			$merk = $post['nama'];
-			$kapasitas = $post['satuan'];
-			$lokasi = $post['parent'];
- 			$aset->add($nama,$satuan,$parent,$jenis_id);
-			$this->session->set_flashdata('success', 'Berhasil disimpan');
+			
+			$waktu = $post['waktu'];
+			$jenis_id = $post['jenis_id'];
+			$jenis_perawatan = $post['jenis_perawatan'];
+ 			$asetJadwal->add($waktu, $jenis_id,$jenis_perawatan);
+			$this->session->set_flashdata('success', 'Berhasil diperbaharui');
+
 		}
+		
 		$data['jenis'] = $this->jenisaset_model->getall();
-		$this->load->view('add_aset',$data);
+		$this->load->view('add_JadwalAset',$data);
+	}
+
+
+	public function editAset(){
+		if($this->session->userdata('authenticated')==false){
+			redirect('login');
+		}
+		$data['aset'] = $this->aset_model->getall();
+		$data['jenis'] = $this->jenisaset_model->getall();
+		$this->load->view('editAset.php',$data);
+	}
+	public function editAsetProses()
+	{
+		# code...
+		
+		$merk = $post["merk"];
+		$kapasitas = $post["kapasitas"];
+		$lokasi = $post["lokasi"];
+		$jenis_id = $post["jenis_id"];
+		
+       $this->Aset_model->edit($id,$merk,$kapasitas,$lokasi,$jenis_id);
+       $this->session->set_flashdata('success', 'Berhasil disimpan');
+		redirect('dashboard/showAsetAll');
+	}
+	public function aboutUs()
+		{
+			# code...
+			$this->load->view('aboutUs.php');
+		}
+	public function hapus()
+	{
+		# code...
+		$id = $this->input->post('id');
+
+		$this->aset_model->delete($id);
+		redirect('dashboard');
 	}
 }
 

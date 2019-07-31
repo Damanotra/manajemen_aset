@@ -9,6 +9,25 @@ class Jadwalform_model extends CI_Model {
 	public $jenis_id;
 	public $jenis_perawatan;
 
+	public function JadwalRules()
+	{
+		# code...
+		return [
+			['field'=>'waktu',
+			'label'=>'waktu',
+			'rules'=>'required'],
+
+			['field'=>'jenis_id',
+			'label'=>'jenis_id',
+			'rules'=>'required'],
+
+			['field'=>'jenis_perawatan',
+			'label'=>'jenis_perawatan',
+			'rules'=>'required'],
+
+		];
+	}
+
 	#tested
 	public function getByJenis($jenis_id)
 	{

@@ -21,7 +21,7 @@
     .navbar-custom {
         background-color: navy;
         border-radius: 0px 0px 25px 0px;
-        opacity: 0.8;
+        opacity: 0.7;
         padding-right: 5%;
     }
     /* change the brand and text color */
@@ -73,7 +73,7 @@
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow mx-1">
-            <a id="shadow" href="<?php echo site_url('login') ?>" class="nav-link" role="button" aria-haspopup="true"
+            <a id="shadow" href="<?php echo site_url('dashboard') ?>" class="nav-link" role="button" aria-haspopup="true"
                 aria-expanded="false">
                 <i class="fas fa-home"> Home</i>
             </a>
@@ -104,26 +104,3 @@
     </ul>
 
 </nav>
-
-<div class="modal fade" id="modalUser">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-              <h3> Akun anda</h3>
-             </div>
-
-            <div class="modal-body">
-                 
-                <p>Nama : <?php echo $_SESSION["nama"]?></p>
-                <p>Username : <?php echo $_SESSION["username"]?></p>
-                <p>Email : <?php echo $_SESSION["email"]?></p>
-            </div>
-
-            <div class="modal-footer">
-                <form action="<?php echo 'login/edit'   ?>">
-              <a class="btn btn-primary" href="<?php echo site_url('login/edit')?>"> Edit Akun</a>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
