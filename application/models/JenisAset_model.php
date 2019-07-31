@@ -12,7 +12,7 @@ class JenisAset_model extends CI_Model {
 	
 	
 
-	public function tambah_JenisAset_rules($value='')
+	public function tambah_JenisAset_rules()
 	{
 		# code...
 		return [

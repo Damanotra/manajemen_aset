@@ -84,16 +84,16 @@ p
 				</div>
 				<div class="card-body" style="border-radius: 25px;">
 			<p>Untuk dapat mengakses website ini, diharuskan untuk melakukan login.</p>
-			<p><strong>1. </strong> Masuk ke halaman website dengan melakukan Login</p>
+			<p><strong>1. </strong> Masuk ke halaman website dengan melakukan Login.</p>
 			<a href="../images/login.png" target="_blank"><img src="../images/login.png" width="100"></a>
 				<i class="fas fa-arrow-right mx-2"></i>
 			<a href="../images/after_login.png" target="_blank"><img src="../images/after_login.png" width="100"></a>
 				
-			<p><strong>2. </strong> Praesent velit purus, venenatis quis orci eget, commodo pellentesque risus. </p>
-			<a href="../images/default.png" target="_blank"><img src="../images/default.png" width="50"></a>
-
-			<p><strong>3. </strong> Dolor velit pers, vawfgnatis quis orci eget, commeando veres oras. </p>
-			<a href="../images/default.png" target="_blank"><img src="../images/default.png" width="50"></a>
+			<p><strong>2. </strong> Berikut adalah menu-menu yang dapat diakses oleh pengguna. </p>
+			<a href="../images/sidebar.png" target="_blank"><img src="../images/sidebar.png" width="100"></a><i class="fas fa-arrow-right mx-2"></i>
+			<a href="../images/sidebar1.png" target="_blank"><img src="../images/sidebar1.png" width="100"></a>
+			<p><strong>3. </strong> Tabel yang menampilkan isi dari form yang telah diisi. </p>
+			<a href="../images/form.png" target="_blank"><img src="../images/form.png" width="150"></a>
 				
 				</div>
 			</div>

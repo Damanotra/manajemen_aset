@@ -22,7 +22,7 @@
     </li>
    
     <li class="nav-item">
-        <a class="nav-link" href="<?php echo site_url('login/logout') ?>" style="text-shadow: 2px 2px black;">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal" style="text-shadow: 2px 2px black;">
             <i class="fas fa-sign-out-alt" style="text-shadow: 2px 2px black;"></i>
             <span>Logout</span></a>
     </li>

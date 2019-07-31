@@ -2,14 +2,27 @@
  thead{
    text-align: center;
  }
-
+.dropdown-toggle-1::after {
+    display:none;
+}
 </style>
 <div class="container-fluid">
    <!-- DataTables -->
-   <div class="card mb-3">
-      <div class="card-header">
-         <a href="<?php echo site_url('dashboard/addAset'); ?>"><i class="fas fa-plus"></i> Add New</a>
+   <div class="card mb-3" style="border-radius: 25px; ">
+      <div class="card-header" style="background: rgba(31, 58, 147, 0.5); color:white; border-radius: 25px 25px 0px 0px; ">
+             <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle-1 my-2"  id="dropdownMenuAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="opacity: 0.6">
+                        <i class="fas fa-plus"></i>   
+                    </button>
+                 
+                 <div class="dropdown-menu" aria-labelledby="dropdownMenuAdd">
+                  <a class="dropdown-item" href="<?php echo site_url('dashboard/addJadwalAset'); ?>"> Tambah Jadwal Aset</a>
+                  <a class="dropdown-item" href="<?php echo site_url('dashboard/addAset'); ?>"> Tambah Aset</a>
+                 </div>
+                 
+               </div>
       </div>
+    
       <div class="card-body">
          <div class="table-responsive-sm table-hover">
             <table class="table table-hover table-bordered text-center" id="dataTable">
@@ -31,6 +44,9 @@
 
                         <?php elseif($col=="jenis_perawatan") :?>
                            <th class="responsive">Perawatan</th>
+
+                        <?php elseif($col=="id") :?>
+                          <th class="responsive">No</th>
 
                         <?php elseif($col=="merk") :?>
                            <th class="responsive">Merk</th>
@@ -65,7 +81,7 @@
                       <?php elseif($col == "nama" and $table == "jenis aset" and isset($row['parent'])): ?>
                         <td class="responsive">
                       <?php else: ?>
-                  <td class="responsive" align="left">
+                  <td class="responsive" align="center">
                   <a>
                   <?php endif;?>
                   <?php echo $row[$col] ?>
@@ -76,7 +92,7 @@
                      <a href="<?php echo 'editAset' ?>"
                         class="btn btn-small"><i class="fas fa-edit"></i> Edit</a>|
                      <a onclick=""
-                        href="<?php echo '' ?>" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
+                      href="#" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
                   </td>
                   </tr>
                   <?php endforeach; ?>
