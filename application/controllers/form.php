@@ -24,7 +24,34 @@ class Form extends CI_Controller {
 	public function testAjax()
 	{
 		# code...
-		echo json_encode($_POST['id']);
+		echo json_encode($_POST);
+	}
+
+	public function test()
+	{
+		# code...
+		$res =  $this->formRow_model->editUser(1,"q");
+		var_dump($res);
+		exit();
+	}
+
+	public function ajaxKondisi()
+	{
+		# code...
+		$id = $_POST['id'];
+		$nilai = $_POST['nilai'];
+		$row_id = $_POST['row_id'];
+		$username = $_SESSION['username'];
+
+		if ($this->kondisi_model->editNilai($id,$nilai)) {
+			# code...
+			if ($this->formRow_model->editUser($row_id,$username)) {
+				# code...
+				echo "success";
+			}
+			
+		}
+
 	}
 
 	public function formAset()

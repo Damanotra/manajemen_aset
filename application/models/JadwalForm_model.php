@@ -52,34 +52,34 @@ class Jadwalform_model extends CI_Model {
 	}
 
 	#tested
-	public function getByBulanTahun($bulan,$tahun)
-	{
-		# code...
-		$clue = "|".$bulan."|".$tahun;
-		$this->db->like('waktu',$clue);
-		$query = $this->db->get($this->_table);
-		return $query->result_array();
-	}
+	// public function getByBulanTahun($bulan,$tahun)
+	// {
+	// 	# code...
+	// 	$clue = "|".$bulan."|".$tahun;
+	// 	$this->db->like('waktu',$clue);
+	// 	$query = $this->db->get($this->_table);
+	// 	return $query->result_array();
+	// }
 
 	#tested
-	public function getByTahun($tahun)
-	{
-		# code...
-		$clue = "|".$tahun;
-		$this->db->like('waktu',$clue);
-		$query = $this->db->get($this->_table);
-		return $query->result_array();
-	}
+	// public function getByTahun($tahun)
+	// {
+	// 	# code...
+	// 	$clue = "|".$tahun;
+	// 	$this->db->like('waktu',$clue);
+	// 	$query = $this->db->get($this->_table);
+	// 	return $query->result_array();
+	// }
 
-	#tested
-	public function getByJenisTahun($jenis_id,$tahun)
-	{
-		# code...
-		$clue = "|".$tahun;
-		$this->db->like('waktu',$clue);
-		$query = $this->db->get_where($this->_table,array('jenis_id' => $jenis_id));
-		return $query->result_array();
-	}
+	// #tested
+	// public function getByJenisTahun($jenis_id,$tahun)
+	// {
+	// 	# code...
+	// 	$clue = "|".$tahun;
+	// 	$this->db->like('waktu',$clue);
+	// 	$query = $this->db->get_where($this->_table,array('jenis_id' => $jenis_id));
+	// 	return $query->result_array();
+	// }
 	
 	
 	public function delete($id)

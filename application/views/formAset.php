@@ -80,6 +80,7 @@
     $('body').on('click', '[data-editable]', function(){
   
   var $el = $(this).children('p');
+  var $par = $(this).parent('tr');
               
   var $input = $('<input name="nilai" />').val( $el.text() );
   $el.replaceWith( $input );
@@ -87,9 +88,10 @@
   var save = function(){
     $.ajax({
         type:"POST",
-        url:"<?php echo site_url('form/testAjax'); ?>",
+        url:"<?php echo site_url('form/ajaxKondisi'); ?>",
         data : {"nilai":$input.val(),
-                "id":$el.attr('id')},
+                "id":$el.attr('id'),
+                "row_id":$par.attr('id')},
         success: function(result) { //we got the response
              alert(result);
         },

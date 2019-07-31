@@ -63,9 +63,9 @@
  <!-------------------------------<START TBODY>------------------------------------>
 <tbody>
   <?php foreach($records as $row):?>
-  <tr>
+  <tr id="<?php echo $row['id'];?>">
     <td><?php echo $row['id'];?></td>
-    <td  data-editable><p><?php echo $row['aset'];?></p></td>
+    <td><p><?php echo $row['aset'];?></p></td>
     <?php foreach ($row['kondisi'] as $kond): ?>
     <td  data-editable><p id="<?php echo $kond['id'];?>"><?php echo $kond['nilai'];?></p></td>
     <?php endforeach ?>
