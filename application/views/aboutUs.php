@@ -25,14 +25,19 @@
 }
 h1 {
 	font-family: 'test';
+	color: navy;
+	opacity: 0.5;
+}
+h2 {
+	font-family: 'test';
 	
 }
+
 p
 	{
 		font-family: 'test';
-		font-size: 20px;
+		font-size: 18px;
 	}
-
 
  </style>
 </div>
@@ -48,16 +53,56 @@ p
 	 	<div id="content-wrapper">
 <?php $this->load->view("_partials/breadcrumb")?>
 <div class="container">
-			<div class="container-fluid text-center">
+			<div class="container-fluid text-center mt-5">
 					<h1>About Us</h1>
 				</div>
-		<div class="container">
-			<p>Website ini adalah hasil Project PKL untuk me</p>
+	<div class="container mt-4"style="border-radius: 25px;">
+								<div class="row mt-2">
+		<div class="col-sm-6">
+			<div class="card" style="border-radius: 25px;">
+				<div class="card-header text-center" style="background-color: navy; opacity: 0.4; color:white; border-radius: 25px; ">
+			<h2> Tentang website kami </h2>
+				</div>
+				<div class="card-body" style="border-radius: 25px;">
+			<p>"Manajemen Aset" adalah sebuah website yang dibuat pada bulan Juli 2019. Website ini digunakan sebagai media untuk mendata aset-aset perusahaan. Website ini juga memudahkan penggunanya untuk mendata dan mengisi form secara dinamis. </p>
+				</div>
+			</div>
 		</div>
 
-
-</div>	
+		<div class="col-sm-6">
 		</div>
+							 
+								</div>
+	<hr class="mt-4" style="border: 1px solid navy; opacity: 0.2">
+								<div class="row mt-5">
+			<div class="col-sm-6">
+			</div>
+			<div class="col-sm-6">
+			<div class="card" style="border-radius: 25px;">
+				<div class="card-header text-center" style="background-color: navy; opacity: 0.4; color:white; border-radius: 25px; ">
+			<h2> Cara Penggunaan </h2>
+				</div>
+				<div class="card-body" style="border-radius: 25px;">
+			<p>Untuk dapat mengakses website ini, diharuskan untuk melakukan login.</p>
+			<p><strong>1. </strong> Masuk ke halaman website dengan melakukan Login</p>
+			<a href="../images/login.png" target="_blank"><img src="../images/login.png" width="100"></a>
+				<i class="fas fa-arrow-right mx-2"></i>
+			<a href="../images/after_login.png" target="_blank"><img src="../images/after_login.png" width="100"></a>
+				
+			<p><strong>2. </strong> Praesent velit purus, venenatis quis orci eget, commodo pellentesque risus. </p>
+			<a href="../images/default.png" target="_blank"><img src="../images/default.png" width="50"></a>
+
+			<p><strong>3. </strong> Dolor velit pers, vawfgnatis quis orci eget, commeando veres oras. </p>
+			<a href="../images/default.png" target="_blank"><img src="../images/default.png" width="50"></a>
+				
+				</div>
+			</div>
+		</div>
+								</div>
+
+	</div>	
+
+</div>
 	</div>
 
 <?php $this->load->view("_partials/js.php")?>

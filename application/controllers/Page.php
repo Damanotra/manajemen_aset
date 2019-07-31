@@ -18,6 +18,10 @@ class Page extends MY_Controller
 		redirect('dashboard');
 	}
 
+	public function home()
+	{
+		$this->load->view('home.php');
+	}
 	
 
 

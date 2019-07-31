@@ -1,8 +1,9 @@
 <!-- Sidebar -->
 
-<ul class="sidebar  navbar-nav" style="background-color: navy;   border-radius: 0px 25px 15px 0px; opacity: 0.7;">
+
+<ul class="sidebar  navbar-nav" style="background-color: navy;   border-radius: 0px 25px 25px 0px; opacity: 0.6;">
     <li class="nav-item <?php echo $this->uri->segment(2) == '' ? 'active': '' ?>">
-        <a class="nav-link" href="<?php echo site_url('login') ?>" style="text-shadow: 2px 2px black;">
+        <a class="nav-link" href="<?php echo site_url('dashboard') ?>" style="text-shadow: 2px 2px black;">
             <i class="far fa fa-tachometer-alt" style="text-shadow: 2px 2px black;"></i>
             <span>Dashboard</span>
         </a>
@@ -17,7 +18,6 @@
             <a class="dropdown-item" href="<?php echo site_url('dashboard/showJadwalByJenis/1') ?>">Jadwal Aset</a>
             <a class="dropdown-item" href="<?php echo 'showJenisAll' ?>">Jenis Aset</a>
             <a class="dropdown-item" href="<?php echo site_url('form/formAset') ?>">Pengisian Form Aset</a>
-            <a class="dropdown-item" href="<?php echo '' ?>">Pengisian Form Aset</a>
         </div>
     </li>
    
