@@ -47,7 +47,6 @@
     <th class="tg-1zis" colspan="7">Tindak Pemeriksaan</th>
     <th class="tg-1zis" rowspan="2"><br><br>Tanggal</th>
     <th class="tg-1zis" rowspan="2"><br><br>Petugas</th>
-    <th class="tg-1zis" rowspan="2"><br><br>Action  </th>
   </tr>
   
   <tr>
@@ -66,13 +65,12 @@
   <?php foreach($records as $row):?>
   <tr>
     <td><?php echo $row['id'];?></td>
-    <td><p data-editable><?php echo $row['aset'];?></p></td>
+    <td  data-editable><p><?php echo $row['aset'];?></p></td>
     <?php foreach ($row['kondisi'] as $kond): ?>
-    <td><?php echo $kond['nilai'];?></td>
+    <td  data-editable><p id="<?php echo $kond['id'];?>"><?php echo $kond['nilai'];?></p></td>
     <?php endforeach ?>
     <td><?php echo $row['tanggal'];?></td>
     <td><?php echo $row['petugas'];?></td>
-    <td><button href="">Edit</button></td>
   </tr>
   <?php endforeach; ?>
     <?php echo form_close();?>

@@ -11,6 +11,7 @@ class Form extends CI_Controller {
 		$this->load->model('jenisaset_model');
 		$this->load->model('jadwalform_model');
 		$this->load->model('formRow_model');
+		$this->load->model('kondisi_model');
 	}
 
 	public function index(){
@@ -20,6 +21,12 @@ class Form extends CI_Controller {
 		redirect('form/formAset');
 	}
 
+	public function testAjax()
+	{
+		# code...
+		echo json_encode($_POST['id']);
+	}
+
 	public function formAset()
 	{
 		# code...
@@ -27,7 +34,7 @@ class Form extends CI_Controller {
 		foreach ($records as &$rec) {
 			# code...
 			$rec['aset'] = $this->db->query('SELECT merk FROM asets WHERE id = '.$rec['aset_id'])->result_array()[0]['merk'];
-			$rec['kondisi'] = $this->db->query('SELECT atribut_id,nilai FROM kondisi WHERE formrow_id='.$rec['id'])->result_array();
+			$rec['kondisi'] = $this->db->query('SELECT id,atribut_id,nilai FROM kondisi WHERE formrow_id='.$rec['id'])->result_array();
 		}
 		$columns = array_keys($records[0]);
 		$data['table'] = 'formrow';

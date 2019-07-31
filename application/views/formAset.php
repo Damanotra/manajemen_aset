@@ -79,13 +79,25 @@
 <script type="text/javascript">
     $('body').on('click', '[data-editable]', function(){
   
-  var $el = $(this);
+  var $el = $(this).children('p');
               
-  var $input = $('<input/>').val( $el.text() );
+  var $input = $('<input name="nilai" />').val( $el.text() );
   $el.replaceWith( $input );
   
   var save = function(){
-    var $p = $('<p data-editable />').text( $input.val() );
+    $.ajax({
+        type:"POST",
+        url:"<?php echo site_url('form/testAjax'); ?>",
+        data : {"nilai":$input.val(),
+                "id":$el.attr('id')},
+        success: function(result) { //we got the response
+             alert(result);
+        },
+        error: function() {
+            alert('fail');
+        },
+    });
+    var $p = $el.text($input.val());
     $input.replaceWith( $p );
   };
   
