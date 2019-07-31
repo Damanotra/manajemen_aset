@@ -10,20 +10,31 @@ class Form extends CI_Controller {
 		$this->load->model('aset_model');
 		$this->load->model('jenisaset_model');
 		$this->load->model('jadwalform_model');
+		$this->load->model('formRow_model');
 	}
 
 	public function index(){
-
 		if($this->session->userdata('authenticated')==false){
 			redirect('login');
 		}
-		redirect('login');
+		redirect('form/formAset');
 	}
+
 	public function formAset()
-		{
+	{
+		# code...
+		$records = $this->formRow_model->getByForm(1);
+		foreach ($records as &$rec) {
 			# code...
-			$this->load->view('formAset.php');
+			$rec['aset'] = $this->db->query('SELECT merk FROM asets WHERE id = '.$rec['aset_id'])->result_array()[0]['merk'];
+			$rec['kondisi'] = $this->db->query('SELECT atribut_id,nilai FROM kondisi WHERE formrow_id='.$rec['id'])->result_array();
 		}
+		$columns = array_keys($records[0]);
+		$data['table'] = 'formrow';
+		$data['records'] = $records;
+		$data['columns'] = $columns;
+		$this->load->view('formAset.php',$data);
+	}
 
 	public function showAtributAll()
 	{
@@ -40,4 +51,12 @@ class Form extends CI_Controller {
 		$data['columns'] = $columns;
 		$this->load->view('form1.php',$data);
 	}
+	public function insert()
+ 	{
+  		$data = array(
+   		'merk' => $this->input->post('merk'),
+   		'kapasitas'  => $this->input->post('kapasitas'),
+   		'lokasi'   => $this->input->post('lokasi'));
+  	}
+
 }

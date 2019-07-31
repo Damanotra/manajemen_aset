@@ -32,6 +32,13 @@ class Aset_model extends CI_Model {
 		];
 	}
 
+	public function load_data()
+ 	{
+ 		$this->db->order_by('id', 'DESC');
+  		$query = $this->db->get($this->_table);
+  		return $query->result_array();
+ 	}
+
 	#tested
  	public function getById($id)
 	{
