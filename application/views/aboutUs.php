@@ -94,6 +94,8 @@ p
 			<a href="../images/sidebar1.png" target="_blank"><img src="../images/sidebar1.png" width="100"></a>
 			<p><strong>3. </strong> Tabel yang menampilkan isi dari form yang telah diisi. </p>
 			<a href="../images/form.png" target="_blank"><img src="../images/form.png" width="150"></a>
+			<p><strong>4. </strong> Isi data form melalui form berikut. </p>
+			<a href="../images/form1.png" target="_blank"><img src="../images/form1.png" width="150"></a>
 				
 				</div>
 			</div>

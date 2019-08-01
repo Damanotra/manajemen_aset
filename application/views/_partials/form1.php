@@ -7,39 +7,35 @@
 .tg td
 {
    padding:10px 5px;
-    border-style:solid;
     border-width:1px;
     overflow:hidden;
     word-break:normal;
-    border-color:black;
 }
 .tg th
 {
    
     padding:10px 5px;
-    border-style:solid;
     border-width:1px;
     overflow:hidden;
     word-break:normal;
-    border-color:black;
 }
 .tg .tg-1zis
 {
     color:#000000;
-    border-color:#000000;
     text-align:center;
     vertical-align:top;
     font-size: 12pt;
 }
 .tg .tg-73oq
 {
-    border-color:#000000;
     text-align:left;
     vertical-align:top
 }
+table {
+}
 </style>
  <!--------------------<START THEAD>------------------------------------------------>
-<table class="tg display compact nowrap dataTable no-footer dtr-inline collapsed" >
+<table class="table tg display compact nowrap dataTable no-footer dtr-inline collapsed" >
 <thead>
   <tr>
     <th class="tg-1zis" rowspan="2"><br><br>No<br></th>

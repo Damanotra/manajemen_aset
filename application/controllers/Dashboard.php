@@ -95,7 +95,7 @@ class Dashboard extends CI_Controller {
 			redirect('login');
 		}
 		# code...
-		$records = $this->jadwalform_model->getByJenisTahun($id,2019);
+		$records = $this->jadwalform_model->getByJenis($id,2019);
 		$columns = array_keys($records[0]);
 		$data['table'] = 'jadwal';
 		$data['records'] = $records;
@@ -144,9 +144,25 @@ class Dashboard extends CI_Controller {
 
 
 	public function editAset(){
+
+		//Masih belum bisa
+
 		if($this->session->userdata('authenticated')==false){
 			redirect('login');
 		}
+
+		$id = $this->uri->segment(3);
+		$result = $this->aset_model->getById($id);
+		 if($result->num_rows() > 0){
+        $i = $result->row_array();
+        $data = array(
+            'id'    => $i['id'],
+            'merk'  => $i['merk'],
+            'kapasitas' => $i['kapasitas'],
+            'lokasi' => $i['lokasi']
+        );
+    	}
+
 		$data['aset'] = $this->aset_model->getall();
 		$data['jenis'] = $this->jenisaset_model->getall();
 		$this->load->view('editAset.php',$data);
@@ -154,13 +170,13 @@ class Dashboard extends CI_Controller {
 	public function editAsetProses()
 	{
 		# code...
-		
+		$post = $this->input->post();
 		$merk = $post["merk"];
 		$kapasitas = $post["kapasitas"];
 		$lokasi = $post["lokasi"];
 		$jenis_id = $post["jenis_id"];
 		
-       $this->Aset_model->edit($id,$merk,$kapasitas,$lokasi,$jenis_id);
+       $this->aset_model->edit($id,$merk,$kapasitas,$lokasi,$jenis_id);
        $this->session->set_flashdata('success', 'Berhasil disimpan');
 		redirect('dashboard/showAsetAll');
 	}

@@ -16,7 +16,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown" >
             <a class="dropdown-item" href="<?php echo site_url('dashboard/showJadwalByJenis/1') ?>">Jadwal Aset</a>
-            <a class="dropdown-item" href="<?php echo 'showJenisAll' ?>">Jenis Aset</a>
+            <a class="dropdown-item" href="<?php echo site_url('dashboard/showJenisAll') ?>">Jenis Aset</a>
             <a class="dropdown-item" href="<?php echo site_url('form/formAset') ?>">Pengisian Form Aset</a>
         </div>
     </li>

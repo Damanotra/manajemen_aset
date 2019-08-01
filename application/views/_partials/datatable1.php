@@ -5,6 +5,12 @@
 .dropdown-toggle-1::after {
     display:none;
 }
+.hide{
+  color: white;
+}
+.hide1{
+  opacity: 0;
+}
 </style>
 <div class="container-fluid">
    <!-- DataTables -->
@@ -45,6 +51,18 @@
                         <?php elseif($col=="jenis_perawatan") :?>
                            <th class="responsive">Perawatan</th>
 
+                        <?php elseif($col=="nama") :?>
+                          <th class="responsive">Jenis Aset</th>
+
+                        <?php elseif($col=="satuan") :?>
+                            <th class="responsive">Satuan</th>
+
+                        <?php elseif($col=="id_jenisaset") :?>
+                          <th class="responsive">No</th>
+
+                        <?php elseif($col=="id"  and $table =="jenis aset") :?>
+                          <th class="responsive"  width="5"><a class="hide1">test</a></th>
+
                         <?php elseif($col=="id") :?>
                           <th class="responsive">No</th>
 
@@ -76,17 +94,30 @@
                      <tr>
                      <?php foreach ($columns as $col): ?>
                       <?php  if($col=="jenis_id"): ?>
-                  <td class="responsive" align="left">
+                  <td class="responsive" align="center">
                      <a href="<?php echo site_url('dashboard/showJenisAsetById/'.$row[$col])?>">
                       <?php elseif($col == "nama" and $table == "jenis aset" and isset($row['parent'])): ?>
                         <td class="responsive">
+                      <?php elseif($col == "satuan"  and $table == "jenis aset"): ?>
+                        <td class="responsive" align="center">
+
+                       <?php elseif($col == "id_jenisaset" and $table == "jenis aset" and isset($row['parent'])): ?>
+                      <td class="responsive" align="right">
+                      <?php elseif($col == "parent" and $table == "jenis aset" and isset($row['parent'])): ?>
+                      <td class="responsive hide">
+                        <?php elseif($col == "id"  and $table == "jenis aset"): ?>
+                      <td class="hide1" width="5">
                       <?php else: ?>
-                  <td class="responsive" align="center">
+
+                  <td class="responsive" align="left">
                   <a>
                   <?php endif;?>
                   <?php echo $row[$col] ?>
                   </a>
                   </td>
+
+
+
                   <?php endforeach;?>
                   <td class="responsive">
                      <a href="<?php echo 'editAset' ?>"

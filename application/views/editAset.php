@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Add Item</title>
+    <title>Edit Item</title>
     <div class="open-head">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -48,10 +48,10 @@
                                             </div>
                                             <div class="card-body">
 
-                                                <form action="<?php site_url('editAsetProses') ?>" method="post" enctype="multipart/form-data">
+                                                <form action="<?php site_url('editAsetProses') ?>" method="post">
                                                     <div class="form-group">
                                                         <label for="merk">Merk*</label>
-                                                        <input class="form-control <?php echo form_error('merk') ? 'is-invalid':'' ?>" type="text" name="merk" placeholder="Aset Merk" />
+                                                        <input class="form-control" type="text" name="merk" value="" />
                                                         <div class="invalid-feedback">
                                                             <?php echo form_error('name') ?>
                                                         </div>
@@ -59,7 +59,7 @@
 
                                                     <div class="form-group">
                                                         <label for="kapasitas">Kapasitas*</label>
-                                                        <input class="form-control <?php echo form_error('kapasitas') ? 'is-invalid':'' ?>" type="text" name="kapasitas" min="0" placeholder="Aset kapasitas" />
+                                                        <input class="form-control" type="text" name="kapasitas" min="0" placeholder="Aset kapasitas" />
                                                         <div class="invalid-feedback">
                                                             <?php echo form_error('kapasitas') ?>
                                                         </div>
@@ -67,7 +67,7 @@
 
                                                     <div class="form-group">
                                                         <label for="lokasi">Lokasi*</label>
-                                                        <input class="form-control <?php echo form_error('lokasi') ? 'is-invalid':'' ?>" type="text" name="lokasi" placeholder="Aset lokasi" />
+                                                        <input class="form-control" type="text" name="lokasi" placeholder="Aset lokasi" />
                                                         <div class="invalid-feedback">
                                                             <?php echo form_error('lokasi') ?>
                                                         </div>

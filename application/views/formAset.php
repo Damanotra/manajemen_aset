@@ -56,11 +56,18 @@
                             <div class="container">
                                 <div class="container-fluid text-center">
 
-                                    <h1>Dashboard</h1>
+                                    <h1>Form Aset</h1>
 
                                     <?php $this->load->view("_partials/dropdown.php")?>
+                                    <div class="card" style="border-radius: 25px 25px 25px 25px;">
+                                        <div class="card-header"  style="background: rgba(31, 58, 147, 0.5); color:white; border-radius: 25px 25px 0px 0px; ">
+                                        </div>
+                                        <div class="card-body">
                                         <?php $this->load->view("_partials/form1.php")?>
-
+                                    </div>
+                                    <div class="card-footer" style="background: rgba(31, 58, 147, 0.5); border-radius: 0px 0px 25px 25px;">
+                                    </div>
+                                </div>
                                 </div>
 
                             </div>
