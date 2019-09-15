@@ -10,7 +10,6 @@ class Form_model extends CI_Model {
  	public $pembuat_form;
 	public $penyetuju_form;
 
-
 	
 	public function getAll()
 	{

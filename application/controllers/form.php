@@ -18,7 +18,7 @@ class Form extends CI_Controller {
 		if($this->session->userdata('authenticated')==false){
 			redirect('login');
 		}
-		redirect('form/formAset');
+		redirect('form/formAset/1');
 	}
 
 	public function testAjax()
@@ -54,10 +54,10 @@ class Form extends CI_Controller {
 
 	}
 
-	public function formAset()
+	public function formAset($id)
 	{
 		# code...
-		$records = $this->formRow_model->getByForm(1);
+		$records = $this->formRow_model->getByForm($id);
 		foreach ($records as &$rec) {
 			# code...
 			$rec['aset'] = $this->db->query('SELECT merk FROM asets WHERE id = '.$rec['aset_id'])->result_array()[0]['merk'];
@@ -78,7 +78,7 @@ class Form extends CI_Controller {
 			 
 		}
 		# code...
-		$records = $this->Atribut_model->getAll();
+		$records = $this->tindakan_model->getAll();
 		$columns = array_keys($records[0]);
 		$data['table'] = 'atribut';
 		$data['records'] = $records;

@@ -55,6 +55,33 @@ class login extends CI_Controller
 		}
 	}
 
+	public function loginMobile($username,$password)
+	{
+		# code...
+		$password = md5($password);
+		$user = $this->User_model->getById($username);
+
+		if(empty($user)){
+			echo json_encode("No username found");
+		}else{
+			if($password == $user['password']){
+				$session = array(
+					'authenticated'=>true,
+					'username' => $user["username"],
+					'nama' => $user["nama"],
+					'email' =>$user["email"]
+				);
+				
+				$this->session->set_userdata($session);
+				echo json_encode("verified");
+			}else {
+				echo json_encode("Wrong Password");
+			}
+		}
+	}
+
+	
+
 	public function daftar(){
 		
 		$user = $this->User_model;

@@ -33,12 +33,36 @@
                 <?php endif; ?>
                 <div class="card mb-3">
                     <div class="card-header">
-                        <a href="<?php echo site_url('dashboard') ?>"><i class="fas fa-arrow-left"></i> Back</a>
+                        <a href="<?php echo site_url('admin/activities/') ?>"><i class="fas fa-arrow-left"></i> Back</a>
                     </div>
                     <div class="card-body">
                         <form action="<?php site_url('addAset') ?>" method="post" enctype="multipart/form-data">
-                            <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Nama', 'nama_tanpa_spasi'=>'Nama'));?>
-                            <?php $this->load->view('_partials/fg_jenis'); ?>
+                            <div class="form-group">
+                                <label for="nama">Nama*</label>
+                                <input class="form-control <?php echo form_error('nama') ? 'is-invalid':'' ?>" type="text" name="nama" placeholder="Nama Jenis Aset" value="<?php echo $awal['nama']?>" />
+                                <div class="invalid-feedback">
+                                    <?php echo form_error('nama') ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="satuan">satuan*</label>
+                                <input class="form-control <?php echo form_error('satuan') ? 'is-invalid':'' ?>" type="text" name="satuan" min="0" placeholder="Satuan (Unit, meter, kilogram)" value="<?php echo $awal['satuan']?>" />
+                                <div class="invalid-feedback">
+                                    <?php echo form_error('satuan') ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="parent">Kelompok Jenis</label>
+                                <select class="form-control" id="sel1" name="jenis_id">
+                                    <option></option>
+                                    <?php foreach ($parent as $par) {
+                                        if($awal['parent']==$par['id']){
+                                            echo "<option selected='selected' value=".$par['id'].">".$par['id']."-".$par['nama']."</option>";
+                                        }
+                                        echo "<option value=".$par['id'].">".$par['id']."-".$par['nama']."</option>";
+                                        } ?>    
+                                </select>
+                            </div>
                             <input class="btn btn-success" type="submit" name="btn" value="Save" />
                         </form>
                     </div>

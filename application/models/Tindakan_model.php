@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Atribut_model extends CI_Model {
+class Tindakan_model extends CI_Model {
 
 	private $_table = "tindakan";
 	private $id;
@@ -60,7 +60,8 @@ class Atribut_model extends CI_Model {
 		# code...
 		return $this->db->delete($this->_table,array('id'=>$id));
 	}
+
 }
 
-/* End of file Atribut_model.php */
-/* Location: ./application/models/Atribut_model.php */
+/* End of file Tindakan_model.php */
+/* Location: ./application/models/Tindakan_model.php */

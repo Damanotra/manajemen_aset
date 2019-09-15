@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Jadwalform_model extends CI_Model {
+class Jadwal_model extends CI_Model {
 
-	private $_table = "form_per_jadwal";
+	private $_table = "jadwal";
 	public $id;
 	public $waktu;
 	public $jenis_id;
@@ -39,7 +39,7 @@ class Jadwalform_model extends CI_Model {
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->get($this->_table);
+		$query = $this->db->query('SELECT id, jenis_id AS Jenis, minggu AS Minggu, bulan AS Bulan, tahun AS Tahun, jenis_perawatan AS Perawatan FROM jadwal');
 		return $query->result_array();
 	}
 

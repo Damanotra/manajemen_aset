@@ -5,25 +5,15 @@ class Aset_model extends CI_Model {
 
 	private $_table = "asets";
 	public $id;
-	public $merk;
-	public $kapasitas;
-	public $lokasi;
+	public $Nama;
 	public $jenis_id;
 
 	public function rules()
 	{
 		# code...
 		return [
-			['field'=>'merk',
-			'label'=>'merk',
-			'rules'=>'required'],
-
-			['field'=>'kapasitas',
-			'label'=>'kapasitas',
-			'rules'=>'required'],
-
-			['field'=>'lokasi',
-			'label'=>'lokasi',
+			['field'=>'Nama',
+			'label'=>'Nama',
 			'rules'=>'required'],
 
 			['field'=>'jenis_id',
@@ -39,19 +29,52 @@ class Aset_model extends CI_Model {
   		return $query->result_array();
  	}
 
+ 	public function getAtributTetap($id)
+ 	{
+ 		# code...
+ 		$query = $this->db->query('SELECT atribut.nama_atribut as atribut, atribut_aset.nilai AS Nilai FROM atribut JOIN atribut_aset WHERE atribut_aset.aset_id='.$id.' AND atribut.id=atribut_aset.atributtetap_id')->result_array();
+ 	}
+
+
+
 	#tested
  	public function getById($id)
 	{
 		# code...
-		$query = $this->db->get_where($this->_table,array('id' => $id));
-		return $query->row_array();
+		$aset = $this->db->query('SELECT id AS id , Nama AS Nama, jenis_id as Jenis FROM asets WHERE id='.$id)->result_array();
+		
+		$temp = $this->db->query('SELECT atribut.nama_atribut as atribut, atribut_aset.nilai AS Nilai FROM atribut JOIN atribut_aset WHERE atribut_aset.aset_id='.$id.' AND atribut.id=atribut_aset.atributtetap_id')->result_array();
+		foreach ($temp as $t) {
+			# code...
+			$aset[0][$t['atribut']] = $t['Nilai'];
+		}
+		return $aset;
+	}
+
+
+
+	public function getAset($id)
+	{
+		# code...
+		$aset = $this->db->query('SELECT id AS id , Nama AS Nama, jenis_id as Jenis FROM asets WHERE id='.$id)->result_array();
+		
+		$atribut = $this->db->query('SELECT atribut.nama_atribut as atribut, atribut.nama_tanpa_spasi AS variable, atribut_aset.nilai AS Nilai FROM atribut JOIN atribut_aset WHERE atribut_aset.aset_id='.$id.' AND atribut.id=atribut_aset.atributtetap_id')->result_array();
+		$data['aset'] = $aset;
+		$data['atribut'] = $atribut;
+		return $data;
+	}
+
+	public function update($nama)
+	{
+		# code...
+		$query = 'INSERT INTO ';
 	}
 
 	#tested
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->get($this->_table);
+		$query = $this->db->query('SELECT id, Nama AS Nama, jenis_id AS Jenis FROM asets');
 		return $query->result_array();
 	}
 
@@ -67,29 +90,44 @@ class Aset_model extends CI_Model {
 	public function getByJenis($jenis_id)
 	{
 		# code...
-		$query = $this->db->get_where($this->_table,array('jenis_id' => $jenis_id));
+		$query = $this->db->query('SELECT id, Nama AS Nama, jenis_id AS Jenis FROM asets WHERE jenis_id='.$jenis_id);
 		return $query->result_array();
 	}
 
 	#tested
-	public function add($merk,$kapasitas,$lokasi,$jenis_id)
+	public function add($Nama,$jenis_id)
 	{
 		# code...
-		$this->merk = $merk;
-		$this->kapasitas = $kapasitas;
-		$this->lokasi = $lokasi;
+		$this->Nama = $Nama;
 		$this->jenis_id = $jenis_id;
-		return $this->db->insert($this->_table,$this);
+		$query1 = $this->db->insert($this->_table,$this);
+		$aset_id = $this->db->query('SELECT LAST_INSERT_ID()')->row_array()['LAST_INSERT_ID()'];
+		$atribut_id = $this->db->query('SELECT id as atributtetap_id FROM atribut WHERE jenis_id='.$jenis_id)->result_array();
+		if(!is_null($atribut_id[0])){
+			$sql = 'INSERT INTO atribut_aset(aset_id,atributtetap_id) VALUES';
+			$index = 1;
+			foreach ($atribut_id as $atr) {
+		 	# code...
+				if ($index==1) {
+					# code...
+					$sql = $sql.' ('.$aset_id.','.$atr['atributtetap_id'].')';
+					$index = $index+1;
+					continue;
+				}
+				$sql = $sql.', ('.$aset_id.','.$atr['atributtetap_id'].')';
+			} 
+		}
+		$query2 = $this->db->query($sql);
+
+		return ($query1 AND $query2);
 	}
 
 	#tested
-	public function edit($id,$merk,$kapasitas,$lokasi,$jenis_id)
+	public function edit($id,$Nama,$jenis_id)
 	{
 		# code...
 		$data = array(
-       	'merk' => $merk,
-        'kapasitas' => $kapasitas,
-    	'lokasi' => $lokasi,
+       	'Nama' => $Nama,
     	'jenis_id' => $jenis_id
 		);
 		return $this->db->update($this->_table,$data,array('id'=>$id));
@@ -101,6 +139,8 @@ class Aset_model extends CI_Model {
 		# code...
 		return $this->db->delete($this->_table,array('id'=>$id));
 	}
+
+
 
 }
 

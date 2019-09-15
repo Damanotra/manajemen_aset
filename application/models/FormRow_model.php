@@ -26,6 +26,12 @@ class FormRow_model extends CI_Model {
  		return $this->db->get_where($this->_table,array('form_id' => $form_id))->result_array();
  	}
 
+ 	public function getByFormAset($form_id,$aset_id)
+ 	{
+ 		# code...
+ 		return $this->db->get_where($this->_table,array('form_id' => $form_id,'aset_id'=>$aset_id))->result_array();
+ 	}
+
  	public function deleteByForm($form_id)
  	{
  		# code...

@@ -37,17 +37,24 @@ class JenisAset_model extends CI_Model {
 	{
 		# code...
 		$this->load->model('aset_model');
-		$result = $this->db->get_where($this->_table,array('id' => $id))->result_array();
-		$result[0]['jumlah'] = $this->aset_model->getJumlahByJenis($result[0]['id']);
+		$result = $this->db->query("SELECT id, nama AS 'Nama Jenis', satuan AS Satuan, parent AS 'Kelompok Jenis' FROM jenis_aset WHERE id=".$id)->result_array();
+		$result[0]['Jumlah'] = $this->aset_model->getJumlahByJenis($result[0]['id']);
 		return $result;
+	}
+
+	public function getAllParent()
+	{
+		# code...
+		$query = $this->db->get_where($this->_table,array('parent' => NULL));
+		return $query->result_array();
 	}
 
 	#tested
 	public function getAtributById($id)
 	{
 		# code...
-		$this->load->model('atribut_model');
-		$query = $this->atribut_model->getByJenis($id);
+		$this->load->model('tindakan_model');
+		$query = $this->tindakan_model->getByJenis($id);
 		return $query->result_array();
 	}
 
@@ -55,7 +62,7 @@ class JenisAset_model extends CI_Model {
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->get($this->_table);
+		$query = $this->db->query("SELECT id,nama AS 'Nama Jenis', satuan AS Satuan, parent as Kelompok FROM jenis_aset");
 		return $query->result_array();
 	}
 
