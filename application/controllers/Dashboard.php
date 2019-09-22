@@ -16,6 +16,29 @@ class Dashboard extends CI_Controller {
 		}
 	}
 
+	public function addJenis($value='')
+	{
+		# code...
+		$jenisAset = $this->jenisaset_model;
+		$validation = $this->form_validation;
+		$validation->set_rules($jenisAset->tambah_JenisAset_rules());
+		if($validation->run()){
+			$post = $this->input->post();
+			$nama = $post['nama'];
+			$satuan = $post['satuan'];
+			$parent = explode("-", $post['parent'])[0];
+			if ($parent=='') {
+				# code...
+				$parent = NULL;
+			}
+ 			$jenisAset->add($id,$nama,$satuan,$parent);
+			$this->session->set_flashdata('success', 'Berhasil ditambahkan');
+		}
+		$data['parent'] = $jenisAset->getAllParent();
+		$data['awal'] = $jenisAset->getById($id)[0];
+		$this->load->view('editjenis',$data);
+	}
+
 	private function searcharray($value, $key, $target, $array) {
    		foreach ($array as $k) {
        		if ($k[$key] == $value) {
@@ -108,20 +131,34 @@ class Dashboard extends CI_Controller {
 		$records = $this->jenisaset_model->getAll();
 		$index = 1;
 		$subindex = 1;
+		$list_master = array();
 		foreach ($records as &$rec) {
-			# code...
+			# jika punya parent
 			if(!is_null($rec['Kelompok'])) {
+				#cari nomor parent
 				$index_master = $this->searcharray($rec['Kelompok'],'id','No',$records);
-				$rec['No'] = $index_master.'.'.$subindex;
-				$subindex = $subindex+1;
+				#pasang nomor parent ke nomor
+				if(!isset($list_master[$index_master])) {
+					$list_master[$index_master] = array();
+					array_push($list_master[$index_master],1);
+				}
+				else{
+					array_push($list_master[$index_master], end($list_master[$index_master])+1 );
+				}
+
+				$rec['No'] = $index_master.'.'.end($list_master[$index_master]);
 				$rec = array('No' => $rec['No']) + $rec;
-				continue;
+				// continue;
 			}
-			$subindex = 1;
-			$rec['No'] = $index;
-			$rec = array('No' => $rec['No']) + $rec;
-			$index = $index+1;
-		
+			else{
+				$rec['No'] = $index;
+				$rec = array('No' => $rec['No']) + $rec;
+				$index = $index+1;
+			}
+			// $subindex = 1;
+			// $rec['No'] = $index;
+			// $rec = array('No' => $rec['No']) + $rec;
+			// $index = $index+1;
 		}
 		
 		$columns = array_keys($records[0]);
@@ -183,11 +220,12 @@ class Dashboard extends CI_Controller {
 				# code...
 				if($var!='Nama'){
 
-					$query2 = $this->db->query('UPDATE atribut_aset INNER JOIN atribut ON atribut.id=atribut_aset.atributtetap_id WHERE atribut.nama_tanpa_spasi='.$var.' AND atribut_aset.aset_id='.$id.' SET nilai="'.$post[$var].'"');
+					$query2 = $this->db->query("UPDATE atribut_aset SET nilai='".$post[$var]."' WHERE atribut_aset.aset_id=".$id." AND atribut_aset.atributtetap_id = (SELECT id FROM atribut WHERE atribut.nama_tanpa_spasi='".$var."' AND atribut.jenis_id=(SELECT jenis_id FROM asets WHERE asets.id=".$id."))");
 				}
 			}
 			if($query2) $this->session->set_flashdata('success', 'Berhasil disimpan');
 			else $this->session->set_flashdata('pesan', 'Gagal');
+			redirect('dashboard/editAset/'.$id,'refresh');
 		}
 		$this->load->view('editAset.php',$aset);
 	}
@@ -223,16 +261,21 @@ class Dashboard extends CI_Controller {
 		$validation->set_rules($jenisAset->tambah_JenisAset_rules());
 		if($validation->run()){
 			$post = $this->input->post();
-			$merk = $post['nama'];
-			$kapasitas = $post['satuan'];
-			$lokasi = $post['parent'];
- 			$jenisAset->add($merk,$kapasitas,$lokasi,$jenis_id);
+			$nama = $post['nama'];
+			$satuan = $post['satuan'];
+			$parent = explode("-", $post['parent'])[0];
+			if ($parent=='') {
+				# code...
+				$parent = NULL;
+			}
+ 			$jenisAset->edit($id,$nama,$satuan,$parent);
 			$this->session->set_flashdata('success', 'Berhasil disimpan');
 		}
-		$data['parent'] = $this->jenisaset_model->getAllParent();
-		$data['awal'] = $this->jenisaset_model->getById($id)[0];
+		$data['parent'] = $jenisAset->getAllParent();
+		$data['awal'] = $jenisAset->getById($id)[0];
 		$this->load->view('editjenis',$data);
 	}
+
 	public function editAsetProses()
 	{
 		# code...
@@ -246,18 +289,35 @@ class Dashboard extends CI_Controller {
         $this->session->set_flashdata('success', 'Berhasil disimpan');
 		redirect('dashboard/showAsetAll');
 	}
+
 	public function aboutUs()
-		{
-			# code...
-			$this->load->view('aboutUs.php');
-		}
-	public function hapus()
 	{
 		# code...
-		$id = $this->input->post('id');
+		$this->load->view('aboutUs.php');
+	}
 
-		$this->aset_model->delete($id);
-		redirect('dashboard');
+	public function hapusAset($id)
+	{
+		# code...
+		if($this->aset_model->delete($id)){
+			$this->session->set_flashdata('success', 'Sukses dihapus');
+		}
+		else{
+			$this->session->set_flashdata('pesan', 'Gagal dihapus, ada kesalahan. Cek table yang berkaitan');
+		}
+		redirect('dashboard/showAsetAll','refresh');
+	}
+
+	public function hapusJenis($id)
+	{
+		# code...
+		if($this->jenisaset_model->delete($id)){
+			$this->session->set_flashdata('success','Sukses dihapus');
+		}
+		else{
+			$this->session->set_flashdata('pesan', 'Gagal dihapus, ada kesalahan. Cek table yang berkaitan');
+		}
+		redirect('dashboard/showJenisAll','refresh');
 	}
 }
 

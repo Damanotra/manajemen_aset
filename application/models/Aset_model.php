@@ -137,7 +137,22 @@ class Aset_model extends CI_Model {
 	public function delete($id)
 	{
 		# code...
-		return $this->db->delete($this->_table,array('id'=>$id));
+		$query1 = $this->db->query("DELETE FROM atribut_aset WHERE aset_id=".$id);
+		$query2 = $this->db->query("DELETE FROM kondisi WHERE kondisi.formrow_id=(SELECT form_row.id FROM form_row WHERE form_row.aset_id=".$id.")");
+		if($query1 and $query2){
+			$query3 = $this->db->query("DELETE FROM form_row WHERE form_row.aset_id=".$id);
+			$query4 = $this->db->query("DELETE FROM asets WHERE id=".$id);
+			if($query3 and $query4){
+				return TRUE;
+			}
+			else{
+				return FALSE;
+			}
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 

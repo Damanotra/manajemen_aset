@@ -45,7 +45,7 @@ class JenisAset_model extends CI_Model {
 	public function getAllParent()
 	{
 		# code...
-		$query = $this->db->get_where($this->_table,array('parent' => NULL));
+		$query = $this->db->query("SELECT id, nama AS 'Nama Jenis' FROM jenis_aset WHERE parent IS NULL");
 		return $query->result_array();
 	}
 
@@ -62,7 +62,7 @@ class JenisAset_model extends CI_Model {
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->query("SELECT id,nama AS 'Nama Jenis', satuan AS Satuan, parent as Kelompok FROM jenis_aset");
+		$query = $this->db->query("SELECT id,nama AS 'Nama Jenis', satuan AS Satuan, parent as Kelompok FROM jenis_aset ORDER BY Kelompok IS NULL DESC, Kelompok ASC");
 		return $query->result_array();
 	}
 
@@ -90,9 +90,24 @@ class JenisAset_model extends CI_Model {
 	public function delete($id)
 	{
 		# code...
-		return $this->db->delete($this->_table,array('id'=>$id));
+		$list_hapus = $this->db->query("SELECT asets.id FROM asets WHERE asets.jenis_id=".$id)->result_array();
+		if (count($list_hapus)>0) {
+			# code...
+			foreach ($list_hapus as $lh) {
+				$this->aset_model->delete($lh);
+			}
+		}
+		$query1 = $this->db->query("DELETE FROM atribut WHERE jenis_id =".$id);
+		if($query1){
+			$query2 = $this->db->query("DELETE FROM form WHERE form.jadwal_id=(SELECT id FROM jadwal WHERE jadwal.jenis_id=".$id.")");
+			if($query2){
+				$query3 = $this->db->query("DELETE FROM jadwal WHERE jenis_id=".$id);
+				if ($query3) {
+					return TRUE;
+				}
+			}
+		}
 	}
-
 }
 
 /* End of file JenisAset_model.php */

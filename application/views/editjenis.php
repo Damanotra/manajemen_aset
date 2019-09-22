@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Add Item</title>
+        <title>Edit Item</title>
         <div class="open-head">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
             <!-- jQuery library -->
@@ -20,7 +20,6 @@
     </head>
     <body id="page-top">
         <?php $this->load->view("_partials/navbar_custom.php")?>
-        <?php $this->load->view("_partials/modal.php")?>
         <div id="wrapper">
         <?php $this->load->view("_partials/sidebar_custom")?>
         <div id="content-wrapper">
@@ -31,38 +30,15 @@
                     <?php echo $this->session->flashdata('success'); ?>
                 </div>
                 <?php endif; ?>
-                <div class="card mb-3">
+                <div class="card" style="margin-top: 6%;">
                     <div class="card-header">
-                        <a href="<?php echo site_url('admin/activities/') ?>"><i class="fas fa-arrow-left"></i> Back</a>
+                        <a href="<?php echo site_url('dashboard') ?>"><i class="fas fa-arrow-left"></i> Back</a>
                     </div>
                     <div class="card-body">
-                        <form action="<?php site_url('addAset') ?>" method="post" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="nama">Nama*</label>
-                                <input class="form-control <?php echo form_error('nama') ? 'is-invalid':'' ?>" type="text" name="nama" placeholder="Nama Jenis Aset" value="<?php echo $awal['nama']?>" />
-                                <div class="invalid-feedback">
-                                    <?php echo form_error('nama') ?>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="satuan">satuan*</label>
-                                <input class="form-control <?php echo form_error('satuan') ? 'is-invalid':'' ?>" type="text" name="satuan" min="0" placeholder="Satuan (Unit, meter, kilogram)" value="<?php echo $awal['satuan']?>" />
-                                <div class="invalid-feedback">
-                                    <?php echo form_error('satuan') ?>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="parent">Kelompok Jenis</label>
-                                <select class="form-control" id="sel1" name="jenis_id">
-                                    <option></option>
-                                    <?php foreach ($parent as $par) {
-                                        if($awal['parent']==$par['id']){
-                                            echo "<option selected='selected' value=".$par['id'].">".$par['id']."-".$par['nama']."</option>";
-                                        }
-                                        echo "<option value=".$par['id'].">".$par['id']."-".$par['nama']."</option>";
-                                        } ?>    
-                                </select>
-                            </div>
+                        <form action="<?php site_url('editAsetProses') ?>" method="post">
+                            <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Nama Jenis', 'nama_tanpa_spasi'=>'nama','nilai_atribut'=>$awal['Nama Jenis']));?>
+                            <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Satuan', 'nama_tanpa_spasi'=>'satuan','nilai_atribut'=>$awal['Satuan']));?>
+                            <?php $this->load->view('_partials/fg_parent',$data = array('jenis'=>$parent)); ?>
                             <input class="btn btn-success" type="submit" name="btn" value="Save" />
                         </form>
                     </div>
@@ -82,5 +58,6 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+        <?php $this->load->view("_partials/modal.php")?>
     </body>
 </html>

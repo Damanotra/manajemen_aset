@@ -113,7 +113,7 @@
                         $link_hapus = 'hapusJadwal';
                         } ?>
                     <a href="<?php echo $link_edit.'/'.$row['id']; ?>" class="btn btn-small"><i class="fas fa-edit"></i> Edit</a>
-                        <a onclick="deleteConfirm('<?php echo site_url('admin/'.$link_hapus.'/'.$row['id']); ?>')" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
+                        <a onclick="deleteConfirm('<?php echo site_url('dashboard/'.$link_hapus.'/'.$row['id']); ?>')" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
                         <?php if ($table == 'jenis aset') : ?>
                         <a href="<?php echo site_url('dashboard/showAsetByJenis/'.$row['id']) ?>" class="btn btn-small text-primary"> List Aset</a>
                         <?php endif?>
