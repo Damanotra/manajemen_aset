@@ -3,34 +3,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Atribut_model extends CI_Model {
 
-	private $_table = "tindakan";
+	private $_table = "atribut";
 	private $id;
-	public $pemeriksaan;
+	public $nama_atribut;
+	public $nama_tanpa_spasi;
+	public $tipe;
+	public $keterangan;
 	public $jenis_id;
-	public $deskripsi;
+
+	public function rules()
+	{
+		# code...
+		return [
+			['field'=>'nama_atribut',
+			'label'=>'nama_atribut',
+			'rules'=>'required'],
+
+			['field'=>'nama_tanpa_spasi',
+			'label'=>'nama_tanpa_spasi',
+			'rules'=>'required'],
+
+			['field'=>'tipe',
+			'label'=>'tipe',
+			'rules'=>'required']
+		];
+	}
+
 
 	#tested
 	public function getByJenis($jenis_id)
 	{
 		# code...
-		$query =  $this->db->get_where($this->_table,array('jenis_id' => $jenis_id));
+		$query =  $this->db->query("SELECT id, nama_atribut AS 'Nama Atribut', Tipe, keterangan AS Keterangan, jenis_id AS Jenis FROM atribut WHERE jenis_id=".$jenis_id);
 		return $query->result_array();
 	}
 
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->get($this->_table);
+		$query = $this->db->query("SELECT id, nama_atribut AS 'Nama Atribut', Tipe, keterangan AS Keterangan, jenis_id AS Jenis FROM atribut");
 		return $query->result_array();
 	}
 
 
-	public function add($pemeriksaan,$jenis_id,$deskripsi=null)
+	public function add($nama_atribut,$nama_tanpa_spasi,$tipe,$keterangan=NULL,$jenis_id)
 	{
 		# code...
-		$this->pemeriksaan = $pemeriksaan;
+		$this->nama_atribut = $nama_atribut;
+		$this->nama_tanpa_spasi = $nama_tanpa_spasi;
+		$this->tipe = $tipe;
+		$this->keterangan = $keterangan;
 		$this->jenis_id = $jenis_id;
-		$this->deskripsi = $deskripsi;
 		return $this->db->insert($this->_table,$this);
 	}
 
@@ -43,13 +66,15 @@ class Atribut_model extends CI_Model {
 	}
 
 	#tested
-	public function edit($id,$atribut,$jenis_id,$deskripsi=null)
+	public function edit($id,$nama_atribut,$nama_tanpa_spasi,$tipe=1,$keterangan=NULL,$jenis_id)
 	{
 		# code...
 		$data = array(
-       	'pemeriksaan' => $pemeriksaan,
-        'jenis_id' => $jenis_id,
-    	'deskripsi' => $deskripsi
+       	'nama_atribut' => $nama_atribut,
+        'nama_tanpa_spasi' => $nama_tanpa_spasi,
+    	'tipe' => $tipe,
+    	'keterangan' => $keterangan,
+    	'jenis_id' => $jenis_id,
 		);
 		return $this->db->update($this->_table,$data,array('id'=>$id));
 	}

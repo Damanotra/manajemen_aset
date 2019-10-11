@@ -5,7 +5,9 @@ class Jadwal_model extends CI_Model {
 
 	private $_table = "jadwal";
 	public $id;
-	public $waktu;
+	public $minggu;
+	public $bulan;
+	public $tahun;
 	public $jenis_id;
 	public $jenis_perawatan;
 
@@ -13,8 +15,16 @@ class Jadwal_model extends CI_Model {
 	{
 		# code...
 		return [
-			['field'=>'waktu',
-			'label'=>'waktu',
+			['field'=>'minggu',
+			'label'=>'minggu',
+			'rules'=>'required'],
+
+			['field'=>'bulan',
+			'label'=>'bulan',
+			'rules'=>'required'],			
+
+			['field'=>'tahun',
+			'label'=>'tahun',
 			'rules'=>'required'],
 
 			['field'=>'jenis_id',
@@ -24,7 +34,6 @@ class Jadwal_model extends CI_Model {
 			['field'=>'jenis_perawatan',
 			'label'=>'jenis_perawatan',
 			'rules'=>'required'],
-
 		];
 	}
 
@@ -32,7 +41,7 @@ class Jadwal_model extends CI_Model {
 	public function getByJenis($jenis_id)
 	{
 		# code...
-		$query =  $this->db->get_where($this->_table,array('jenis_id' => $jenis_id));
+		$query = $this->db->query('SELECT id, jenis_id AS Jenis, minggu AS Minggu, bulan AS Bulan, tahun AS Tahun, jenis_perawatan AS Perawatan FROM jadwal WHERE jenis_id='.$jenis_id);
 		return $query->result_array();
 	}
 
@@ -99,9 +108,10 @@ class Jadwal_model extends CI_Model {
 
 	public function edit($id,$waktu, $jenis_id,$jenis_perawatan)
 	{
-		# code...
 		$data = array(
-       	'waktu' => $waktu,
+       	'minggu' => $minggu,
+       	'bulan' => $bulan,
+       	'tahun' => $tahun,
         'jenis_id' => $jenis_id,
     	'jenis_perawatan' => $jenis_perawatan
 		);

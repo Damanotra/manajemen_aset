@@ -35,7 +35,7 @@
                         <a href="<?php echo site_url('dashboard') ?>"><i class="fas fa-arrow-left"></i> Back</a>
                     </div>
                     <div class="card-body">
-                        <form action="<?php site_url('editAset/'.$aset[0]['Nama']) ?>" method="post">
+                        <form action="<?php site_url('editAset/'.$aset['id']) ?>" method="post">
                             <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Nama', 'nama_tanpa_spasi'=>'Nama','nilai_atribut'=>$aset[0]['Nama']));?>
                             <?php foreach ($atribut as $atr) {
                                 # code...

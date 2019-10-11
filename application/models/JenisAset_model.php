@@ -103,10 +103,15 @@ class JenisAset_model extends CI_Model {
 			if($query2){
 				$query3 = $this->db->query("DELETE FROM jadwal WHERE jenis_id=".$id);
 				if ($query3) {
-					return TRUE;
+					$query4 = $this->db->query("DELETE FROM jenis_aset WHERE id=".$id);
+					if($query4) return TRUE;
+					else return FALSE;
 				}
+				else return FALSE;
 			}
+			else return FALSE;
 		}
+		return FALSE;
 	}
 }
 

@@ -23,6 +23,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuAdd">
                <a class="dropdown-item" href="<?php echo site_url('dashboard/addJadwalAset'); ?>"> Tambah Jadwal Aset</a>
                <a class="dropdown-item" href="<?php echo site_url('dashboard/addAset'); ?>"> Tambah Aset</a>
+               <a class="dropdown-item" href="<?php echo site_url('dashboard/addJenis'); ?>"> Tambah Jenis</a>
             </div>
          </div>
       </div>
@@ -111,7 +112,13 @@
                            # code...
                         $link_edit = 'editJadwal';
                         $link_hapus = 'hapusJadwal';
-                        } ?>
+                        }
+                        elseif ($table=='atribut'){
+                          $link_edit = 'editAtribut';
+                          $link_hapus = 'hapusAtribut';
+                        }
+                        
+                      ?>
                     <a href="<?php echo $link_edit.'/'.$row['id']; ?>" class="btn btn-small"><i class="fas fa-edit"></i> Edit</a>
                         <a onclick="deleteConfirm('<?php echo site_url('dashboard/'.$link_hapus.'/'.$row['id']); ?>')" class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
                         <?php if ($table == 'jenis aset') : ?>

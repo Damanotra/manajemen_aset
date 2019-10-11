@@ -10,13 +10,33 @@ class Dashboard extends CI_Controller {
 		$this->load->model('aset_model');
 		$this->load->model('jenisaset_model');
 		$this->load->model('Jadwal_model');
+		$this->load->model('Atribut_model');
 
 		if($this->session->userdata('authenticated')==false){
 			redirect('login');
 		}
 	}
 
-	public function addJenis($value='')
+	public $month_map = array(
+		'1' => 'Januari' ,
+		'2' => 'Februari',
+		'3' => 'Maret',
+		'4' => 'April',
+		'5' => 'Mei',
+		'6' => 'Juni',
+		'7' => 'Juli',
+		'8' => 'Agustus',
+		'9' => 'September',
+		'10' => 'Oktober',
+		'11' => 'November',
+		'12' => 'Desember');
+	function month_convert($angka)
+	{
+		# code...
+		return $month_map($angka);
+	}
+
+	public function addJenis()
 	{
 		# code...
 		$jenisAset = $this->jenisaset_model;
@@ -31,12 +51,11 @@ class Dashboard extends CI_Controller {
 				# code...
 				$parent = NULL;
 			}
- 			$jenisAset->add($id,$nama,$satuan,$parent);
+ 			$jenisAset->add($nama,$satuan,$parent);
 			$this->session->set_flashdata('success', 'Berhasil ditambahkan');
 		}
 		$data['parent'] = $jenisAset->getAllParent();
-		$data['awal'] = $jenisAset->getById($id)[0];
-		$this->load->view('editjenis',$data);
+		$this->load->view('add_jenis',$data);
 	}
 
 	private function searcharray($value, $key, $target, $array) {
@@ -57,9 +76,6 @@ class Dashboard extends CI_Controller {
 	}
 	public function showAsetByJenis($jenis_id)
 	{
-		if($this->session->userdata('authenticated')==false){
-			redirect('login');
-		}
 		# code...
 		$records = $this->aset_model->getByJenis($jenis_id);
 		if (!empty($records)) {
@@ -74,6 +90,28 @@ class Dashboard extends CI_Controller {
 		}
 		$this->load->view('dashboard', $data);
 	}
+
+	public function showAtributAll()
+	{
+		# code...
+		$records = $this->Atribut_model->getall();
+		$index = 1;
+		foreach ($records as &$rec) {
+			# code...
+			$rec['No'] = $index;
+			$index = $index+1;
+			$rec = array('No' => $rec['No']) + $rec;
+			if ($rec['Tipe']==1) {
+				$rec['Tipe']='Text';
+			}
+		}
+		$columns = array_keys($records[0]);
+		$data['table'] = 'atribut';
+		$data['records'] = $records;
+		$data['columns'] = $columns;
+		$this->load->view('dashboard', $data);
+	}
+
 
 	public function showAsetAll()
 	{
@@ -171,9 +209,12 @@ class Dashboard extends CI_Controller {
 
 	public function showJadwalByJenis($id)
 	{
-		# code...
 		$records = $this->Jadwal_model->getByJenis(1);
 		$columns = array_keys($records[0]);
+		foreach ($records as &$rec) {
+			# code...
+			$rec['Bulan'] = $this->month_map[$rec['Bulan']];
+		}
 		$data['table'] = 'jadwal';
 		$data['records'] = $records;
 		$data['columns'] = $columns;
@@ -185,6 +226,10 @@ class Dashboard extends CI_Controller {
 		# code...
 		$records = $this->Jadwal_model->getAll();
 		$columns = array_keys($records[0]);
+		foreach ($records as &$rec) {
+			# code...
+			$rec['Bulan'] = $this->month_map[$rec['Bulan']];
+		}
 		$data['table'] = 'jadwal';
 		$data['records'] = $records;
 		$data['columns'] = $columns;
@@ -207,6 +252,56 @@ class Dashboard extends CI_Controller {
 		$this->load->view('add_aset',$data);
 	}
 
+	public function addAtribut()
+	{
+		# code...
+		$atribut = $this->Atribut_model;
+		$validation = $this->form_validation;
+		$validation->set_rules($atribut->rules());
+		if($validation->run()){
+			$post = $this->input->post();
+			$data['nama_atribut'] = $post['nama_atribut'];
+			$data['nama_tanpa_spasi'] = $post['nama_tanpa_spasi'];
+			$data['tipe'] = explode("-", $post['tipe'])[0];
+			$data['keterangan'] = $post['keterangan'];
+			$data['jenis_id'] = explode("-", $post['jenis_id'])[0];
+			if($atribut->add($data['nama_atribut'],$data['nama_tanpa_spasi'],$data['tipe'],$data['keterangan'],$data['jenis_id'])){
+				$this->session->set_flashdata('success', 'Berhasil Disimpan');
+			}
+			else{
+				$this->session->set_flashdata('gagal', 'Gagal Menyimpan Data');
+			}
+		}
+		$data['jenis'] = $this->jenisaset_model->getAll();
+		$this->load->view('add_atribut',$data);
+	}
+
+
+	public function editAtribut($id)
+	{
+		$atribut = $this->Atribut_model->getById($id);
+		$validation = $this->form_validation;
+		$validation->set_rules($this->Atribut_model->rules());
+		if($validation->run()){
+			$post = $this->input->post();
+			$data['nama_atribut'] = $post['nama_atribut'];
+			$data['nama_tanpa_spasi'] = $post['nama_tanpa_spasi'];
+			$data['tipe'] = explode("-", $post['tipe'])[0];
+			$data['keterangan'] = $post['keterangan'];
+			$data['jenis_id'] = explode("-", $post['jenis_id'])[0];
+			if($atribut->add($data['nama_atribut'],$data['nama_tanpa_spasi'],$data['tipe'],$data['keterangan'],$data['jenis_id'])){
+				$this->session->set_flashdata('success', 'Berhasil Disimpan');
+			}
+			else{
+				$this->session->set_flashdata('gagal', 'Gagal Menyimpan Data');
+			}
+		}
+		$data['atribut']= $atribut;
+		$data['jenis'] = $this->jenisaset_model->getAll();
+		
+		$this->load->view('edit_atribut.php',$data);
+	}
+
 	public function editAset($id){
 		$aset = $this->aset_model->getAset($id);
 		$validation = $this->form_validation;
@@ -227,6 +322,7 @@ class Dashboard extends CI_Controller {
 			else $this->session->set_flashdata('pesan', 'Gagal');
 			redirect('dashboard/editAset/'.$id,'refresh');
 		}
+
 		$this->load->view('editAset.php',$aset);
 	}
 
@@ -243,14 +339,31 @@ class Dashboard extends CI_Controller {
 			$jenis_perawatan = $post['jenis_perawatan'];
  			$asetJadwal->add($waktu, $jenis_id,$jenis_perawatan);
 			$this->session->set_flashdata('success', 'Berhasil diperbaharui');
+		}
+		$data['jenis'] = $this->jenisaset_model->getall();
+		$this->load->view('add_JadwalAset',$data);
+	}
 
+	public function editJadwal($id)
+	{
+		# code...
+		$asetJadwal = $this->Jadwal_model;
+		$validation = $this->form_validation;
+		$validation->set_rules($asetJadwal->JadwalRules());
+		if($validation->run()){
+			$post = $this->input->post();
+			$minggu = $post['minggu'];
+			$bulan = $post['bulan'];
+			$tahun = $post['minggu'];
+			$jenis_id = $post['jenis_id'];
+			$jenis_perawatan = $post['jenis_perawatan'];
+ 			$asetJadwal->add($waktu, $jenis_id,$jenis_perawatan);
+			$this->session->set_flashdata('success', 'Berhasil diperbaharui');
 		}
 		
 		$data['jenis'] = $this->jenisaset_model->getall();
 		$this->load->view('add_JadwalAset',$data);
 	}
-
-
 
 
 	public function editJenis($id)
