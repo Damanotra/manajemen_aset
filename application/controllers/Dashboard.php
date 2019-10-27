@@ -132,7 +132,7 @@ class Dashboard extends CI_Controller {
 			$post = $this->input->post();
 			$pemeriksaan = $post['pemeriksaan'];
 			$jenis_id = explode("-", $post['jenis_id'])[0];
-			$deskripsi = $post['Deskripsi'];
+			$deskripsi = $post['deskripsi'];
  			$tindakan->add($pemeriksaan,$jenis_id,$deskripsi);
 			$this->session->set_flashdata('success', 'Berhasil disimpan');
 		}

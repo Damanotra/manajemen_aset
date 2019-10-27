@@ -25,6 +25,7 @@
           <a class="dropdown-item" href="<?php echo site_url('dashboard/addAset'); ?>"> Tambah Aset</a>
           <a class="dropdown-item" href="<?php echo site_url('dashboard/addJenis'); ?>"> Tambah Jenis</a>
           <a class="dropdown-item" href="<?php echo site_url('dashboard/addAtribut'); ?>"> Daftarkan Atribut</a>
+          <a class="dropdown-item" href="<?php echo site_url('dashboard/addPemeriksaan'); ?>"> Daftarkan Pengecekan</a>
         </div>
       </div>
     </div>

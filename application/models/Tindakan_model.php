@@ -50,8 +50,8 @@ class Tindakan_model extends CI_Model {
 		if($this->db->insert($this->_table,$this)){
 			$tindakan_id = $this->db->query('SELECT LAST_INSERT_ID()')->row_array()['LAST_INSERT_ID()'];
 			// $row_id = $this->db->query("SELECT form_row.id AS id FROM row_id INNER JOIN asets WHERE asets.jenis_id=".$jenis_id)->result_array();
-			if($this->db->query("INSERT INTO kondisi(formrow_id) SELECT form_row.id AS id FROM row_id INNER JOIN asets WHERE asets.jenis_id=".$jenis_id)){
-				return $this->db->query("UPDATE kondisi SET tindakan_id=".$tindakan_id."WHERE tindakan_id IS NULL");
+			if($this->db->query("INSERT INTO kondisi(formrow_id) SELECT form_row.id AS id FROM form_row INNER JOIN asets WHERE asets.jenis_id=".$jenis_id)){
+				return $this->db->query("UPDATE kondisi SET tindakan_id=".$tindakan_id." WHERE tindakan_id IS NULL");
 			}
 			return FALSE;
 		}
