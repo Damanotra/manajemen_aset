@@ -15,12 +15,13 @@ class Kondisi_model extends CI_Model {
 		$this->db->get_where($this->_table,array('formrow_id' => $formrow_id));
 	}
 
-	public function editNilai($id,$nilai)
+	public function editNilai($pemeriksaan,$nilai,$row_id)
 	{
 		# code...
 		$data = array(
        	'nilai' => $nilai
 		);
+		$id = $this->db->query("SELECT kondisi.id AS id FROM kondisi INNER JOIN tindakan ON kondisi.tindakan_id=tindakan.id WHERE kondisi.formrow_id=".$row_id." AND tindakan.pemeriksaan='".$pemeriksaan."'")->row_array()['id'];
 		return $this->db->update($this->_table,$data,array('id'=>$id));
 	}
 

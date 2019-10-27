@@ -9,6 +9,20 @@ class Tindakan_model extends CI_Model {
 	public $jenis_id;
 	public $deskripsi;
 
+	public function rules()
+	{
+		# code...
+		return [
+			['field'=>'pemeriksaan',
+			'label'=>'pemeriksaan',
+			'rules'=>'required'],
+
+			['field'=>'jenis_id',
+			'label'=>'jenis_id',
+			'rules'=>'required']
+		];
+	}
+
 	#tested
 	public function getByJenis($jenis_id)
 	{
@@ -20,9 +34,11 @@ class Tindakan_model extends CI_Model {
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->get($this->_table);
+		$query = $this->db->query("SELECT tindakan.id AS id, tindakan.pemeriksaan AS Pemeriksaan, tindakan.jenis_id AS jenis_id, jenis_aset.nama AS Jenis, tindakan.deskripsi AS Deskripsi FROM tindakan INNER JOIN jenis_aset ON tindakan.jenis_id=jenis_aset.id");
 		return $query->result_array();
 	}
+
+
 
 
 	public function add($pemeriksaan,$jenis_id,$deskripsi=null)
@@ -31,7 +47,15 @@ class Tindakan_model extends CI_Model {
 		$this->pemeriksaan = $pemeriksaan;
 		$this->jenis_id = $jenis_id;
 		$this->deskripsi = $deskripsi;
-		return $this->db->insert($this->_table,$this);
+		if($this->db->insert($this->_table,$this)){
+			$tindakan_id = $this->db->query('SELECT LAST_INSERT_ID()')->row_array()['LAST_INSERT_ID()'];
+			// $row_id = $this->db->query("SELECT form_row.id AS id FROM row_id INNER JOIN asets WHERE asets.jenis_id=".$jenis_id)->result_array();
+			if($this->db->query("INSERT INTO kondisi(formrow_id) SELECT form_row.id AS id FROM row_id INNER JOIN asets WHERE asets.jenis_id=".$jenis_id)){
+				return $this->db->query("UPDATE kondisi SET tindakan_id=".$tindakan_id."WHERE tindakan_id IS NULL");
+			}
+			return FALSE;
+		}
+		return FALSE;
 	}
 
 	#tested

@@ -9,9 +9,9 @@ class Form extends CI_Controller {
 		$this->load->model("User_model");
 		$this->load->model('aset_model');
 		$this->load->model('jenisaset_model');
-		$this->load->model('jadwalform_model');
 		$this->load->model('formRow_model');
 		$this->load->model('kondisi_model');
+		$this->load->model('Form_model');
 	}
 
 	public function index(){
@@ -35,33 +35,34 @@ class Form extends CI_Controller {
 		exit();
 	}
 
-	public function ajaxKondisi()
+	public function editKondisi()
 	{
 		# code...
-		$id = $_POST['id'];
+		$pemeriksaan = $_POST['pemeriksaan'];
 		$nilai = $_POST['nilai'];
 		$row_id = $_POST['row_id'];
-		$username = $_SESSION['username'];
-
-		if ($this->kondisi_model->editNilai($id,$nilai)) {
-			# code...
-			if ($this->formRow_model->editUser($row_id,$username)) {
-				# code...
-				echo "success";
-			}
-			
+		if ($this->kondisi_model->editNilai($pemeriksaan,$nilai,$row_id)) {
+			echo json_encode("success");
 		}
+	}
 
+	public function getByJadwal($jadwal_id)
+	{
+		# code...
+		$id = $this->db->query("SELECT id FROM form WHERE jadwal_id =".$jadwal_id)->row_array()['id'];
+		if ($id!=NULL) {
+			redirect('form/formAset/'.$id,'refresh');
+		} else {
+			$this->session->set_flashdata('pesan', 'Form tidak ditemukan');
+			redirect('dashboard/showJadwalAll','refresh');
+		}
 	}
 
 	public function formAset($id)
 	{
-		# code...
 		$records = $this->formRow_model->getByForm($id);
 		foreach ($records as &$rec) {
-			# code...
-			$rec['aset'] = $this->db->query('SELECT merk FROM asets WHERE id = '.$rec['aset_id'])->result_array()[0]['merk'];
-			$rec['kondisi'] = $this->db->query('SELECT id,atribut_id,nilai FROM kondisi WHERE formrow_id='.$rec['id'])->result_array();
+			$rec  = $this->formRow_model->getByFormAndAset($id,$rec['aset_id']);
 		}
 		$columns = array_keys($records[0]);
 		$data['table'] = 'formrow';

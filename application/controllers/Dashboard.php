@@ -11,6 +11,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model('jenisaset_model');
 		$this->load->model('Jadwal_model');
 		$this->load->model('Atribut_model');
+		$this->load->model('Tindakan_model');
 
 		if($this->session->userdata('authenticated')==false){
 			redirect('login');
@@ -35,7 +36,6 @@ class Dashboard extends CI_Controller {
 		# code...
 		return $month_map($angka);
 	}
-
 	public function addJenis()
 	{
 		# code...
@@ -112,6 +112,38 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard', $data);
 	}
 
+	public function JenisPemeriksaanAll()
+	{
+		# code...
+		$records = $this->Tindakan_model->getAll();
+		$columns = array_keys($records[0]); //ambil nama kolom
+		$data['table'] = 'tindakan';
+		$data['records'] = $records;
+		$data['columns'] = $columns;
+		$this->load->view('dashboard', $data);
+	}
+
+	public function addPemeriksaan()
+	{
+		$tindakan = $this->Tindakan_model;
+		$validation = $this->form_validation;
+		$validation->set_rules($tindakan->rules());
+		if($validation->run()){
+			$post = $this->input->post();
+			$pemeriksaan = $post['pemeriksaan'];
+			$jenis_id = explode("-", $post['jenis_id'])[0];
+			$deskripsi = $post['Deskripsi'];
+ 			$tindakan->add($pemeriksaan,$jenis_id,$deskripsi);
+			$this->session->set_flashdata('success', 'Berhasil disimpan');
+		}
+		$data['jenis'] = $this->jenisaset_model->getAll();
+		function sortByOrder($a, $b) {
+    		return $a['id'] - $b['id'];
+		}
+		usort($data['jenis'], 'sortByOrder');
+		$this->load->view('add_pemeriksaan',$data);
+	}
+
 
 	public function showAsetAll()
 	{
@@ -135,17 +167,11 @@ class Dashboard extends CI_Controller {
 	{
 		# code...
 		$records = $this->aset_model->getById($id);
-		$index = 1;
-		foreach ($records as &$rec) {
-			# code...
-			$rec['No'] = $index;
-			$index = $index+1;
-			$rec = array('No' => $rec['No']) + $rec;
-		}
 		$columns = array_keys($records[0]);
 		$data['table'] = 'aset';
 		$data['records'] = $records;
 		$data['columns'] = $columns;
+		
 		$this->load->view('dashboard', $data);
 	}
 
@@ -227,7 +253,6 @@ class Dashboard extends CI_Controller {
 		$records = $this->Jadwal_model->getAll();
 		$columns = array_keys($records[0]);
 		foreach ($records as &$rec) {
-			# code...
 			$rec['Bulan'] = $this->month_map[$rec['Bulan']];
 		}
 		$data['table'] = 'jadwal';
@@ -249,6 +274,10 @@ class Dashboard extends CI_Controller {
 			$this->session->set_flashdata('success', 'Berhasil disimpan');
 		}
 		$data['jenis'] = $this->jenisaset_model->getAll();
+		function sortByOrder($a, $b) {
+    		return $a['id'] - $b['id'];
+		}
+		usort($data['jenis'], 'sortByOrder');
 		$this->load->view('add_aset',$data);
 	}
 
@@ -269,10 +298,14 @@ class Dashboard extends CI_Controller {
 				$this->session->set_flashdata('success', 'Berhasil Disimpan');
 			}
 			else{
-				$this->session->set_flashdata('gagal', 'Gagal Menyimpan Data');
+				$this->session->set_flashdata('gagal', 'Gagal Menyimpan atribut. Hapus atribut jika tersimpan. Kemudian buat ulang');
 			}
 		}
 		$data['jenis'] = $this->jenisaset_model->getAll();
+		function sortByOrder($a, $b) {
+    		return $a['id'] - $b['id'];
+		}
+		usort($data['jenis'], 'sortByOrder');
 		$this->load->view('add_atribut',$data);
 	}
 
@@ -289,16 +322,20 @@ class Dashboard extends CI_Controller {
 			$data['tipe'] = explode("-", $post['tipe'])[0];
 			$data['keterangan'] = $post['keterangan'];
 			$data['jenis_id'] = explode("-", $post['jenis_id'])[0];
-			if($atribut->add($data['nama_atribut'],$data['nama_tanpa_spasi'],$data['tipe'],$data['keterangan'],$data['jenis_id'])){
+			if($this->Atribut_model->edit($id,$data['nama_atribut'],$data['nama_tanpa_spasi'],$data['tipe'],$data['keterangan'],$data['jenis_id'])){
 				$this->session->set_flashdata('success', 'Berhasil Disimpan');
 			}
 			else{
 				$this->session->set_flashdata('gagal', 'Gagal Menyimpan Data');
 			}
+			redirect('dashboard/editAtribut/'.$id,'refresh');
 		}
 		$data['atribut']= $atribut;
 		$data['jenis'] = $this->jenisaset_model->getAll();
-		
+		function sortByOrder($a, $b) {
+    		return $a['id'] - $b['id'];
+		}
+		usort($data['jenis'], 'sortByOrder');
 		$this->load->view('edit_atribut.php',$data);
 	}
 
@@ -314,7 +351,6 @@ class Dashboard extends CI_Controller {
 			foreach ($variable as $var) {
 				# code...
 				if($var!='Nama'){
-
 					$query2 = $this->db->query("UPDATE atribut_aset SET nilai='".$post[$var]."' WHERE atribut_aset.aset_id=".$id." AND atribut_aset.atributtetap_id = (SELECT id FROM atribut WHERE atribut.nama_tanpa_spasi='".$var."' AND atribut.jenis_id=(SELECT jenis_id FROM asets WHERE asets.id=".$id."))");
 				}
 			}
@@ -322,31 +358,11 @@ class Dashboard extends CI_Controller {
 			else $this->session->set_flashdata('pesan', 'Gagal');
 			redirect('dashboard/editAset/'.$id,'refresh');
 		}
-
 		$this->load->view('editAset.php',$aset);
 	}
 
 	public function addJadwalAset()
 	{
-			
-		$asetJadwal = $this->Jadwal_model;
-		$validation = $this->form_validation;
-		$validation->set_rules($asetJadwal->JadwalRules());
-		if($validation->run()){
-			$post = $this->input->post();
-			$waktu = $post['waktu'];
-			$jenis_id = $post['jenis_id'];
-			$jenis_perawatan = $post['jenis_perawatan'];
- 			$asetJadwal->add($waktu, $jenis_id,$jenis_perawatan);
-			$this->session->set_flashdata('success', 'Berhasil diperbaharui');
-		}
-		$data['jenis'] = $this->jenisaset_model->getall();
-		$this->load->view('add_JadwalAset',$data);
-	}
-
-	public function editJadwal($id)
-	{
-		# code...
 		$asetJadwal = $this->Jadwal_model;
 		$validation = $this->form_validation;
 		$validation->set_rules($asetJadwal->JadwalRules());
@@ -354,21 +370,47 @@ class Dashboard extends CI_Controller {
 			$post = $this->input->post();
 			$minggu = $post['minggu'];
 			$bulan = $post['bulan'];
-			$tahun = $post['minggu'];
-			$jenis_id = $post['jenis_id'];
+			$tahun = $post['tahun'];
+			$jenis_id = explode("-", $post['jenis_id'])[0];
 			$jenis_perawatan = $post['jenis_perawatan'];
- 			$asetJadwal->add($waktu, $jenis_id,$jenis_perawatan);
+ 			$asetJadwal->add($minggu,$bulan,$tahun, $jenis_id,$jenis_perawatan);
 			$this->session->set_flashdata('success', 'Berhasil diperbaharui');
 		}
-		
 		$data['jenis'] = $this->jenisaset_model->getall();
+		function sortByOrder($a, $b) {
+    		return $a['id'] - $b['id'];
+		}
+		usort($data['jenis'], 'sortByOrder');
 		$this->load->view('add_JadwalAset',$data);
+	}
+
+	public function editJadwal($id)
+	{
+		$asetJadwal = $this->Jadwal_model;
+		$validation = $this->form_validation;
+		$validation->set_rules($asetJadwal->JadwalRules());
+		if($validation->run()){
+			$post = $this->input->post();
+			$minggu = $post['minggu'];
+			$bulan = $post['bulan'];
+			$tahun = $post['tahun'];
+			$jenis_id = explode("-", $post['jenis_id'])[0];
+			$jenis_perawatan = $post['jenis_perawatan'];
+ 			$asetJadwal->edit($id,$minggu,$bulan,$tahun, $jenis_id,$jenis_perawatan);
+			$this->session->set_flashdata('success', 'Berhasil diperbaharui');
+		}
+		$data['jenis'] = $this->jenisaset_model->getall();
+		function sortByOrder($a, $b) {
+    		return $a['id'] - $b['id'];
+		} 
+		usort($data['jenis'], 'sortByOrder');
+		$data['awal'] = $asetJadwal->getById($id);
+		$this->load->view('edit_JadwalAset',$data);
 	}
 
 
 	public function editJenis($id)
 	{
-		# code...
 		$jenisAset = $this->jenisaset_model;
 		$validation = $this->form_validation;
 		$validation->set_rules($jenisAset->tambah_JenisAset_rules());
@@ -378,7 +420,6 @@ class Dashboard extends CI_Controller {
 			$satuan = $post['satuan'];
 			$parent = explode("-", $post['parent'])[0];
 			if ($parent=='') {
-				# code...
 				$parent = NULL;
 			}
  			$jenisAset->edit($id,$nama,$satuan,$parent);
@@ -396,22 +437,31 @@ class Dashboard extends CI_Controller {
 		$merk = $post["merk"];
 		$kapasitas = $post["kapasitas"];
 		$lokasi = $post["lokasi"];
-		$jenis_id = $post["jenis_id"];
+		$jenis_id = explode("-", $post['jenis_id'])[0];
 		
         $this->aset_model->edit($id,$merk,$kapasitas,$lokasi,$jenis_id);
         $this->session->set_flashdata('success', 'Berhasil disimpan');
 		redirect('dashboard/showAsetAll');
 	}
 
+	public function hapusJadwal($id)
+	{
+		if($this->Jadwal_model->delete($id)){
+			$this->session->set_flashdata('success', 'Sukses dihapus');
+		}
+		else{
+			$this->session->set_flashdata('pesan', 'Gagal dihapus, ada kesalahan. Cek table yang berkaitan');
+		}
+		redirect('dashboard/showJadwalAll','refresh');
+	}
+
 	public function aboutUs()
 	{
-		# code...
 		$this->load->view('aboutUs.php');
 	}
 
 	public function hapusAset($id)
 	{
-		# code...
 		if($this->aset_model->delete($id)){
 			$this->session->set_flashdata('success', 'Sukses dihapus');
 		}
@@ -421,9 +471,19 @@ class Dashboard extends CI_Controller {
 		redirect('dashboard/showAsetAll','refresh');
 	}
 
+	public function hapusAtribut($id)
+	{
+		if($this->Atribut_model->delete($id)){
+			$this->session->set_flashdata('success', 'Sukses dihapus');
+		}
+		else{
+			$this->session->set_flashdata('pesan', 'Gagal dihapus, ada kesalahan. Cek table yang berkaitan');
+		}
+		redirect('dashboard/showAtributAll','refresh');
+	}
+
 	public function hapusJenis($id)
 	{
-		# code...
 		if($this->jenisaset_model->delete($id)){
 			$this->session->set_flashdata('success','Sukses dihapus');
 		}

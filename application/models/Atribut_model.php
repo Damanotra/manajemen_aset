@@ -41,7 +41,7 @@ class Atribut_model extends CI_Model {
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->query("SELECT id, nama_atribut AS 'Nama Atribut', Tipe, keterangan AS Keterangan, jenis_id AS Jenis FROM atribut");
+		$query = $this->db->query("SELECT atribut.id AS id, atribut.nama_atribut AS 'Nama Atribut', atribut.Tipe AS Tipe, atribut.keterangan AS Keterangan, atribut.jenis_id AS jenis_id, jenis_aset.nama AS Jenis FROM atribut INNER JOIN jenis_aset ON atribut.jenis_id=jenis_aset.id");
 		return $query->result_array();
 	}
 
@@ -54,7 +54,32 @@ class Atribut_model extends CI_Model {
 		$this->tipe = $tipe;
 		$this->keterangan = $keterangan;
 		$this->jenis_id = $jenis_id;
-		return $this->db->insert($this->_table,$this);
+		if($this->db->insert($this->_table,$this)){
+			$atributid = $this->db->query('SELECT LAST_INSERT_ID()')->row_array()['LAST_INSERT_ID()'];
+			$asetid = $this->db->query("SELECT id FROM asets WHERE jenis_id=".$jenis_id)->result_array();
+			if(count($asetid)>0){
+				$query = "INSERT INTO atribut_aset(aset_id,atributtetap_id) VALUES ";
+				$index = 1;
+				foreach ($asetid as $aid) {
+					if($index==1){
+						$query = $query."(".$aid['id'].",".$atributid.")";
+					}
+					else{
+						$query = $query.",(".$aid['id'].",".$atributid.")";
+					}
+					$index = $index +1;
+				}
+				if($this->db->query($query)){
+					return TRUE;
+				}
+				else{
+					return FALSE;
+				}
+			}
+ 		}
+ 		else{
+ 			return FALSE;
+ 		}
 	}
 
 	#tested
@@ -83,7 +108,13 @@ class Atribut_model extends CI_Model {
 	public function delete($id)
 	{
 		# code...
-		return $this->db->delete($this->_table,array('id'=>$id));
+		if($this->db->delete("atribut_aset",array('atributtetap_id'=>$id))){
+			if($this->db->delete($this->_table,array('id'=>$id))){
+				return TRUE;
+			}
+			return FALSE;
+		}
+		return FALSE;
 	}
 }
 

@@ -20,10 +20,23 @@ class FormRow_model extends CI_Model {
 		return $this->db->insert($this->_table,$this);
  	}
 
+ 	public function getByFormAndAset($form_id,$aset_id)
+ 	{
+ 		# code...
+ 		$row = $this->db->query("SELECT form_row.id AS id, asets.Nama as 'Nama Aset', form_row.tanggal AS Tanggal, form_row.petugas AS Petugas  FROM form_row INNER JOIN asets ON form_row.aset_id = asets.id WHERE form_row.form_id=".$form_id." AND form_row.aset_id=".$aset_id)->row_array();
+		
+		$temp = $this->db->query("SELECT tindakan.pemeriksaan as Pemeriksaan, kondisi.nilai AS Nilai FROM tindakan INNER JOIN kondisi ON kondisi.tindakan_id=tindakan.id WHERE kondisi.formrow_id=".$row['id'])->result_array();
+		foreach ($temp as $t) {
+			# code...
+			$row[$t['Pemeriksaan']] = $t['Nilai'];
+		}
+		return $row;
+ 	}
+
  	public function getByForm($form_id)
  	{
  		# code...
- 		return $this->db->get_where($this->_table,array('form_id' => $form_id))->result_array();
+ 		return $this->db->query("SELECT id, tanggal AS Tanggal, form_id, aset_id, petugas AS Petugas FROM form_row WHERE form_id=".$form_id)->result_array();
  	}
 
  	public function getByFormAset($form_id,$aset_id)

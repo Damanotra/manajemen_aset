@@ -95,16 +95,16 @@
   var save = function(){
     $.ajax({
         type:"POST",
-        url:"<?php echo site_url('form/ajaxKondisi'); ?>",
+        url:"<?php echo site_url('form/editKondisi'); ?>",
         data : {"nilai":$input.val(),
-                "id":$el.attr('id'),
+                "pemeriksaan":$el.attr('title'),
                 "row_id":$par.attr('id')},
-        success: function(result) { //we got the response
-             alert(result);
+        success: function($result) { //we got the response
+             alert("sukses");
         },
-        error: function() {
-            alert('fail');
-        },
+        error: function(jqxhr, status, exception) {
+             console.log(exception);
+         },
     });
     var $p = $el.text($input.val());
     $input.replaceWith( $p );

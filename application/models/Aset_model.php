@@ -41,7 +41,7 @@ class Aset_model extends CI_Model {
  	public function getById($id)
 	{
 		# code...
-		$aset = $this->db->query('SELECT id AS id , Nama AS Nama, jenis_id as Jenis FROM asets WHERE id='.$id)->result_array();
+		$aset = $this->db->query('SELECT asets.id AS id , asets.Nama AS Nama, asets.jenis_id as jenis_id, jenis_aset.nama AS Jenis FROM asets INNER JOIN jenis_aset ON asets.jenis_id=jenis_aset.id WHERE asets.id='.$id)->result_array();
 		
 		$temp = $this->db->query('SELECT atribut.nama_atribut as atribut, atribut_aset.nilai AS Nilai FROM atribut JOIN atribut_aset WHERE atribut_aset.aset_id='.$id.' AND atribut.id=atribut_aset.atributtetap_id')->result_array();
 		foreach ($temp as $t) {
@@ -55,8 +55,7 @@ class Aset_model extends CI_Model {
 
 	public function getAset($id)
 	{
-		# code...
-		$aset = $this->db->query('SELECT id AS id , Nama AS Nama, jenis_id as Jenis FROM asets WHERE id='.$id)->result_array();
+		$aset = $this->db->query('SELECT asets.id AS id , asets.Nama AS Nama, asets.jenis_id as jenis_id, jenis_aset.nama AS Jenis FROM asets INNER JOIN jenis_aset ON asets.jenis_id=jenis_aset.id WHERE asets.id='.$id)->result_array();
 		
 		$atribut = $this->db->query('SELECT atribut.nama_atribut as atribut, atribut.nama_tanpa_spasi AS variable, atribut_aset.nilai AS Nilai FROM atribut JOIN atribut_aset WHERE atribut_aset.aset_id='.$id.' AND atribut.id=atribut_aset.atributtetap_id')->result_array();
 		$data['aset'] = $aset;
@@ -66,7 +65,6 @@ class Aset_model extends CI_Model {
 
 	public function update($nama)
 	{
-		# code...
 		$query = 'INSERT INTO ';
 	}
 
@@ -74,7 +72,7 @@ class Aset_model extends CI_Model {
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->query('SELECT id, Nama AS Nama, jenis_id AS Jenis FROM asets');
+		$query = $this->db->query('SELECT asets.id, asets.Nama AS Nama, asets.jenis_id AS jenis_id, jenis_aset.nama AS Jenis FROM asets INNER JOIN jenis_aset ON asets.jenis_id=jenis_aset.id');
 		return $query->result_array();
 	}
 
@@ -90,7 +88,7 @@ class Aset_model extends CI_Model {
 	public function getByJenis($jenis_id)
 	{
 		# code...
-		$query = $this->db->query('SELECT id, Nama AS Nama, jenis_id AS Jenis FROM asets WHERE jenis_id='.$jenis_id);
+		$query = $this->db->query('SELECT asets.id AS id , asets.Nama AS Nama, asets.jenis_id as jenis_id, jenis_aset.nama AS Jenis FROM asets INNER JOIN jenis_aset ON asets.jenis_id=jenis_aset.id WHERE jenis_id='.$jenis_id);
 		return $query->result_array();
 	}
 
@@ -100,29 +98,77 @@ class Aset_model extends CI_Model {
 		# code...
 		$this->Nama = $Nama;
 		$this->jenis_id = $jenis_id;
-		$query1 = $this->db->insert($this->_table,$this);
-		$aset_id = $this->db->query('SELECT LAST_INSERT_ID()')->row_array()['LAST_INSERT_ID()'];
-		$atribut_id = $this->db->query('SELECT id as atributtetap_id FROM atribut WHERE jenis_id='.$jenis_id)->result_array();
-		if(!is_null($atribut_id[0])){
-			$sql = 'INSERT INTO atribut_aset(aset_id,atributtetap_id) VALUES';
-			$index = 1;
-			foreach ($atribut_id as $atr) {
-		 	# code...
-				if ($index==1) {
-					# code...
-					$sql = $sql.' ('.$aset_id.','.$atr['atributtetap_id'].')';
-					$index = $index+1;
-					continue;
+		if ($this->db->insert($this->_table,$this)) {
+			# code...
+			$aset_id = $this->db->query('SELECT LAST_INSERT_ID()')->row_array()['LAST_INSERT_ID()'];
+			$atribut_id = $this->db->query('SELECT id as atributtetap_id FROM atribut WHERE jenis_id='.$jenis_id)->result_array();
+			if(count($atribut_id)>0){
+				$sql = 'INSERT INTO atribut_aset(aset_id,atributtetap_id) VALUES';
+				$index = 1;
+				foreach ($atribut_id as $atr) {
+		 		# code...
+					if ($index==1) {
+						# code...
+						$sql = $sql.' ('.$aset_id.','.$atr['atributtetap_id'].')';
+						$index = $index+1;
+						continue;
+					}
+					$sql = $sql.', ('.$aset_id.','.$atr['atributtetap_id'].')';
 				}
-				$sql = $sql.', ('.$aset_id.','.$atr['atributtetap_id'].')';
-			} 
+				if ($this->db->query($sql)) {
+					# code...
+					$tindakan_id = $this->db->query("SELECT id AS tindakan_id FROM tindakan WHERE jenis_id=".$jenis_id)->result_array();
+					if (count($tindakan_id)>0) {
+						$form_id = $this->db->query("SELECT form.id AS form_id FROM form INNER JOIN jadwal ON form.jadwal_id=jadwal.id WHERE jadwal.jenis_id=".$jenis_id)->result_array();
+						if (count($form_id)>0) {
+							# code...
+							foreach ($form_id as $form) {
+								# code...
+								if ($this->db->query("INSERT INTO form_row(aset_id,form_id) VALUES(".$aset_id.",".$form['form_id'].")")) {
+									$row_id = $this->db->query('SELECT LAST_INSERT_ID()')->row_array()['LAST_INSERT_ID()'];
+									# code...
+									$sql_ = "INSERT INTO kondisi(formrow_id,tindakan_id) VALUES ";
+									$index_ = 1;
+									foreach ($tindakan_id as $tindakan) {
+										# code...
+										if ($index_==1) {
+											# code...
+											$sql_ = $sql_.' ('.$row_id.','.$tindakan['tindakan_id'].')';
+											$index_ = $index_+1;
+											continue;
+										}
+										$sql_ = $sql_.', ('.$row_id.','.$tindakan['tindakan_id'].')';
+									}
+									if ($this->db->query($sql_)) {
+										# code...
+										continue;
+									} else {
+										# code...
+										return FALSE;
+									}
+								} else {
+									# code...
+									return FALSE;
+								}
+							}
+						} else {
+							# code...
+							return FALSE;
+						}
+					}
+					
+				} else {
+					# code...
+					return FALSE;
+				}
+			}
+		} else {
+			# code...
+			return FALSE;
 		}
-		$query2 = $this->db->query($sql);
-
-		return ($query1 AND $query2);
+		return TRUE;
 	}
 
-	#tested
 	public function edit($id,$Nama,$jenis_id)
 	{
 		# code...
@@ -136,7 +182,6 @@ class Aset_model extends CI_Model {
 	#tested
 	public function delete($id)
 	{
-		# code...
 		$query1 = $this->db->query("DELETE FROM atribut_aset WHERE aset_id=".$id);
 		$query2 = $this->db->query("DELETE FROM kondisi WHERE kondisi.formrow_id=(SELECT form_row.id FROM form_row WHERE form_row.aset_id=".$id.")");
 		if($query1 and $query2){

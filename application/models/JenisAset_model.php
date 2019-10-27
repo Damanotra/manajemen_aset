@@ -62,8 +62,12 @@ class JenisAset_model extends CI_Model {
 	public function getAll()
 	{
 		# code...
-		$query = $this->db->query("SELECT id,nama AS 'Nama Jenis', satuan AS Satuan, parent as Kelompok FROM jenis_aset ORDER BY Kelompok IS NULL DESC, Kelompok ASC");
-		return $query->result_array();
+		$query = $this->db->query("SELECT id,nama AS 'Nama Jenis', satuan AS Satuan, parent as Kelompok FROM jenis_aset ORDER BY Kelompok IS NULL DESC, Kelompok ASC")->result_array();
+		foreach ($query as &$jenis) {
+			$jumlah = $this->db->query("SELECT id FROM asets WHERE jenis_id='".$jenis['id']."'")->result_array();
+			$jenis['Jumlah'] = count($jumlah);
+		}
+		return $query;
 	}
 
 	#tested
@@ -73,7 +77,6 @@ class JenisAset_model extends CI_Model {
 		$this->satuan = $satuan;
 		$this->parent = $parent;
 		return $this->db->insert($this->_table,$this);
-		# code...
 	}
 
 	public function edit($id,$nama,$satuan,$parent=null)

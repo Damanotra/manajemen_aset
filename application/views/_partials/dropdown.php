@@ -7,5 +7,6 @@
     <a class="dropdown-item" href="<?php echo site_url('dashboard/showJenisAll') ?>">Semua Jenis Aset</a>
     <a class="dropdown-item" href="<?php echo site_url('dashboard/showJadwalAll') ?>">Jadwal Perawatan</a>
     <a class="dropdown-item" href="<?php echo site_url('dashboard/showAtributAll') ?>">Semua Atribut</a>
+    <a class="dropdown-item" href="<?php echo site_url('dashboard/JenisPemeriksaanAll') ?>">Jenis Perawatan</a>
   </div>
 </div>

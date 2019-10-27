@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Edit Item</title>
+        <title>Edit Jadwal</title>
         <div class="open-head">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
             <!-- jQuery library -->
@@ -20,6 +20,7 @@
     </head>
     <body id="page-top">
         <?php $this->load->view("_partials/navbar_custom.php")?>
+        <?php $this->load->view("_partials/modal.php")?>
         <div id="wrapper">
         <?php $this->load->view("_partials/sidebar_custom")?>
         <div id="content-wrapper">
@@ -30,18 +31,24 @@
                     <?php echo $this->session->flashdata('success'); ?>
                 </div>
                 <?php endif; ?>
-                <div class="card" style="margin-top: 6%;">
+                <div class="card mb-3">
                     <div class="card-header">
                         <a href="<?php echo site_url('dashboard') ?>"><i class="fas fa-arrow-left"></i> Back</a>
                     </div>
                     <div class="card-body">
-                        <form action="<?php site_url('editAset/'.$aset[0]['id']) ?>" method="post">
-                            <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Nama', 'nama_tanpa_spasi'=>'Nama','nilai_atribut'=>$aset[0]['Nama']));?>
-                            <?php foreach ($atribut as $atr) {
-                                # code...
-                                $this->load->view('_partials/form_group', $data = array('nama_atribut'=>$atr['atribut'], 'nama_tanpa_spasi'=>$atr['variable'],'nilai_atribut'=>$atr['Nilai']));
-                            }?>
-                            <input class="btn btn-success" type="submit" name="btn" value="Save" />
+                        <form action="<?php site_url('dashboard/addJadwalAset') ?>" method="post" enctype="multipart/form-data">
+                            <?php $this->load->view('_partials/fg_minggu', $data = array('value'=>$awal['minggu'])); ?>
+                            <?php $this->load->view('_partials/fg_bulan', $data = array('value'=>$awal['bulan'])); ?>
+                            <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Tahun', 'nama_tanpa_spasi'=>'tahun','nilai_atribut'=>$awal['tahun']));?>
+                            <div class="form-group">
+                                <label for="satuan">Jenis Perawatan</label>
+                                <input class="form-control <?php echo form_error('jenis_perawatan') ? 'is-invalid':'' ?>" type="text" name="jenis_perawatan" min="0" placeholder="Jenis Perawatan" value= <?php  echo $awal['jenis_perawatan'] ?> />
+                                <div class="invalid-feedback">
+                                    <?php echo form_error('jenis_perawatan') ?>
+                                </div>
+                            </div>
+                            <?php $this->load->view('_partials/fg_jenis',$data = array('value'=>$awal['jenis_id'])); ?>
+                            <input class="btn btn-success" type="submit" name="btn" value="Save" >
                         </form>
                     </div>
                     <div class="card-footer small text-muted">
@@ -60,6 +67,5 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-        <?php $this->load->view("_partials/modal.php")?>
     </body>
 </html>
