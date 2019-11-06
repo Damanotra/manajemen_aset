@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller {
 		parent::__construct();
 		$this->load->model("User_model");
 		$this->load->model('aset_model');
-		$this->load->model('jenisaset_model');
+		$this->load->model('JenisAset_model');
 		$this->load->model('Jadwal_model');
 		$this->load->model('Atribut_model');
 		$this->load->model('Tindakan_model');
@@ -112,16 +112,32 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard', $data);
 	}
 
-	public function JenisPemeriksaanAll()
+	public function editPemeriksaan($id)
 	{
-		# code...
-		$records = $this->Tindakan_model->getAll();
-		$columns = array_keys($records[0]); //ambil nama kolom
-		$data['table'] = 'tindakan';
-		$data['records'] = $records;
-		$data['columns'] = $columns;
-		$this->load->view('dashboard', $data);
+		$tindakan = $this->Tindakan_model->getById($id);
+		$validation = $this->form_validation;
+		$validation->set_rules($this->Tindakan_model->rules());
+		if($validation->run()){
+			$post = $this->input->post();
+			$pemeriksaan = $post['pemeriksaan'];
+			$jenis_id = explode("-", $post['jenis_id'])[0];
+			$deskripsi = $post['deskripsi'];
+			if($this->Tindakan_model->edit($id,$pemeriksaan,$jenis_id,$deskripsi)){
+				$this->session->set_flashdata('success', 'Berhasil Disimpan');
+			}
+			else{
+				$this->session->set_flashdata('gagal', 'Gagal Menyimpan Data');
+			}
+		}
+		$data['awal']= $tindakan;
+		$data['jenis'] = $this->jenisaset_model->getAll();
+		function sortByOrder($a, $b) {
+    		return $a['id'] - $b['id'];
+		}
+		usort($data['jenis'], 'sortByOrder');
+		$this->load->view('edit_pemeriksaan',$data);
 	}
+
 
 	public function addPemeriksaan()
 	{
@@ -142,6 +158,27 @@ class Dashboard extends CI_Controller {
 		}
 		usort($data['jenis'], 'sortByOrder');
 		$this->load->view('add_pemeriksaan',$data);
+	}
+
+	public function JenisPemeriksaanAll()
+	{
+		$records = $this->Tindakan_model->getAll();
+		$columns = array_keys($records[0]); //ambil nama kolom
+		$data['table'] = 'pemeriksaan';
+		$data['records'] = $records;
+		$data['columns'] = $columns;
+		$this->load->view('dashboard', $data);
+	}
+
+	public function hapusPemeriksaan($id)
+	{
+		# code...
+		if ($this->Tindakan_model->delete($id)) {
+			$this->session->set_flashdata('success', 'Berhasil Disimpan');
+		} else {
+			$this->session->set_flashdata('gagal', 'Gagal Menyimpan Data');
+		}
+		redirect('dashboard/JenisPemeriksaanAll','refresh');
 	}
 
 

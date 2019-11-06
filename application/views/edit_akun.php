@@ -39,11 +39,15 @@
 					<h3>Edit Akun</h3> 
 			</div>
 			<div class="container">
-				<?php if ($this->session->flashdata('pesan')): ?>
-                        <div class="alert alert-success" role="alert">
-                               <?php echo $this->session->flashdata('pesan'); ?>
-                        </div>
-                <?php endif; ?>
+				<?php if ($this->session->flashdata('success')): ?>
+        <div class="alert alert-success" role="alert">
+          <?php echo $this->session->flashdata('success'); ?>
+        </div>
+        <?php elseif ($this->session->flashdata('gagal')): ?>
+        <div class="alert alert-warning" role="alert">
+          <?php echo $this->session->flashdata('gagal'); ?>
+        </div>
+        <?php endif; ?>
 					<?php echo form_open('login/proses_edit') ?>
 						  	
                         	<label> Nama </label><br>

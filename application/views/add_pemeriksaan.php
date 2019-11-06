@@ -27,10 +27,14 @@
             <?php $this->load->view("_partials/breadcrumb")?>
             <div class="container-fluid">
                 <?php if ($this->session->flashdata('success')): ?>
-                <div class="alert alert-success" role="alert">
-                    <?php echo $this->session->flashdata('success'); ?>
-                </div>
-                <?php endif; ?>
+        <div class="alert alert-success" role="alert">
+          <?php echo $this->session->flashdata('success'); ?>
+        </div>
+        <?php elseif ($this->session->flashdata('gagal')): ?>
+        <div class="alert alert-warning" role="alert">
+          <?php echo $this->session->flashdata('gagal'); ?>
+        </div>
+        <?php endif; ?>
                 <div class="card mb-3">
                     <div class="card-header">
                         <a href="<?php echo site_url('dashboard') ?>"><i class="fas fa-arrow-left"></i> Back</a>

@@ -14,9 +14,6 @@ class login extends CI_Controller
 	public function index()
 	{
 		if($this->session->userdata('authenticated')){
-			/*var_dump('nama');
-			exit();*/
-			
 			redirect('page/home/'.$_SESSION['username']);
 		}
 
@@ -79,8 +76,6 @@ class login extends CI_Controller
 			}
 		}
 	}
-
-	
 
 	public function daftar(){
 		

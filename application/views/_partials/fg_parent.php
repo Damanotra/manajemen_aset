@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="parent">Jenis Aset:</label>
+    <label for="parent">Kelompok Jenis:</label>
     <select class="form-control" id="sel1" name="parent">
     	<option>-</option>
     <?php foreach ($parent as $par) {

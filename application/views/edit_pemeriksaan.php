@@ -37,13 +37,13 @@
         <?php endif; ?>
                 <div class="card mb-3">
                     <div class="card-header">
-                        <a href="<?php echo site_url('admin/activities/') ?>"><i class="fas fa-arrow-left"></i> Back</a>
+                        <a href="<?php echo site_url('dashboard') ?>"><i class="fas fa-arrow-left"></i> Back</a>
                     </div>
                     <div class="card-body">
-                        <form action="<?php site_url('addAset') ?>" method="post" enctype="multipart/form-data">
-                            <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Nama Jenis', 'nama_tanpa_spasi'=>'nama','nilai_atribut'=>''));?>
-                            <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Satuan', 'nama_tanpa_spasi'=>'satuan','nilai_atribut'=>''));?>
-                            <?php $this->load->view('_partials/fg_parent',$data = array('jenis'=>$parent)); ?>
+                        <form action="<?php site_url('editPemeriksaan') ?>" method="post" enctype="multipart/form-data">
+                            <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Hal yang diperiksa', 'nama_tanpa_spasi'=>'pemeriksaan', 'nilai_atribut'=>$awal['pemeriksaan']));?>
+                            <?php $this->load->view('_partials/fg_jenis',$data = array('value'=>$awal['jenis_id'])); ?>
+                            <?php $this->load->view('_partials/form_group', $data = array('nama_atribut'=>'Deskripsi', 'nama_tanpa_spasi'=>'deskripsi', 'value' => $awal['deskripsi']));?>
                             <input class="btn btn-success" type="submit" name="btn" value="Save" />
                         </form>
                     </div>

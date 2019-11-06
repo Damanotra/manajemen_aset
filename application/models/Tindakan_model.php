@@ -67,9 +67,8 @@ class Tindakan_model extends CI_Model {
 	}
 
 	#tested
-	public function edit($id,$atribut,$jenis_id,$deskripsi=null)
+	public function edit($id,$pemeriksaan,$jenis_id,$deskripsi=null)
 	{
-		# code...
 		$data = array(
        	'pemeriksaan' => $pemeriksaan,
         'jenis_id' => $jenis_id,
@@ -82,7 +81,14 @@ class Tindakan_model extends CI_Model {
 	public function delete($id)
 	{
 		# code...
-		return $this->db->delete($this->_table,array('id'=>$id));
+		if($this->db->query("DELETE FROM kondisi WHERE tindakan_id=".$id)){
+			if ($this->db->query("DELETE FROM tindakan WHERE id=".$id)) {
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+		}
+		return FALSE;
 	}
 
 }
